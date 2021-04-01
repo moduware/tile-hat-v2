@@ -1,46 +1,415 @@
-<!doctype html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
-	<meta charset="utf-8">
-	<title>Moduware Tile HAT</title>
-	<meta name="generator" content="PWA Starter Kit">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="Moduware Tile Template">
-
-	<!--
-      The `<base>` tag below is present to support two advanced deployment options:
-      1) Differential serving. 2) Serving from a non-root path.
-
-      Instead of manually editing the `<base>` tag yourself, you should generally either:
-      a) Add a `basePath` property to the build configuration in your `polymer.json`.
-      b) Use the `base-path` command-line option for `polymer build`.
-    -->
-	<base href="./">
-
-	<!-- Performance tip: hint to the browser to start the handshake for the fonts site -->
-	<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
-	<script>
-		// Redux assumes `process.env.NODE_ENV` exists in the ES module build.
-		// https://github.com/reactjs/redux/issues/2907
-		window.process = { env: { NODE_ENV: 'production' } };
-	</script>
-
-	<link rel="stylesheet" href="fonts/fonts.css">
-	<style>
-	</style>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css"/>
+    <title>Dashboard</title>
 </head>
 
 <body>
-	<my-app appTitle="Tile Template"></my-app>
-	<noscript>
-		Please enable JavaScript to view this website.
-	</noscript>
-	<!-- Load webcomponents-loader.js to check and load any polyfills your browser needs -->
-	<script src="node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
-	<script src="node_modules/moment/moment.js"></script>
-	<!-- Built with love using PWA Starter Kit -->
-	<script type="module" src="src/components/my-app.js"></script>
+    <div class="content">
+
+        <header class="app-header">
+            <div class="back">
+                <a href="javascript:;" id="backBtn">
+                    <img src="icons/back.svg" />
+                </a>
+            </div>
+            <h4 class="title">Temperature</h4>
+            <div class="history">
+                <a href="javascript:;" id="historyLink">
+                    <img src="icons/history.svg" />
+                </a>
+            </div>
+        </header>
+
+        <div class="wrapper index-marker">
+
+            <div class="pull-right temperature-toggle-container">
+                <div class="toggle-switch-container">
+                    <input id="toggle-c" class="toggle toggle-left toggle-c" name="toggle" value="c" type="radio" checked>
+                    <label for="toggle-c" class="btn">C</label>
+                    <input id="toggle-f" class="toggle toggle-right toggle-f" name="toggle" value="f" type="radio">
+                    <label for="toggle-f" class="btn">F</label>
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+
+            <div class="gauge" data-digit="">
+                <div class="gauge-outer"></div>
+                <div class="gauge-inner"></div>
+                <div class="gauge-digits"></div>
+            </div>
+
+            <div class="humidity-chart" id="humidityChart">
+                <svg viewBox="0 0 36 36" class="circular-chart blue">
+                    <path class="circle-bg" d="M18 2.0845
+                a 15.9155 15.9155 0 0 1 0 31.831
+                a 15.9155 15.9155 0 0 1 0 -31.831" />
+                    <path id="humidyGauge" class="circle" stroke-dasharray="0, 100" d="M18 2.0845
+                a 15.9155 15.9155 0 0 1 0 31.831
+                a 15.9155 15.9155 0 0 1 0 -31.831" />
+                    <text x="18" y="15" class="text">
+                        Humidity
+                    </text>
+                    <text id="humidtyText" x="18" y="23" class="percentage">
+                        0%
+                    </text>
+                </svg>
+            </div>
+            <div class="distance-img-wrapper" id="objectIllustration">
+                <img src="icons/object-distance.svg" />
+            </div>
+            <div class="distance-img-wrapper" id="foreheadIllustration">
+                <img src="icons/forehead-distance.svg" />
+            </div>
+            <div class="forehead-warning-wrapper" id="foreheadWarning">
+                <img src="icons/warning.svg" />
+                <p>
+                    Body temperature<br>higher than normal.
+                </p>
+            </div>
+            <div>
+                <a class="save-btn" href="javascript:;">Save</a>
+            </div>
+
+        </div>
+
+        <div class="search-wapper history-marker">
+            <a class="search-icon" href="javascript:;">
+                <img src="icons/search.svg">
+            </a>
+            <input class="form-control" type="text" placeholder="Search" />
+            <a class="mic-icon" href="javascript:;">
+                <img src="icons/microphone.svg">
+            </a>
+        </div>
+
+        <div class="history-items-wrapper scrolling-div history-marker">
+
+            <a href="javascript:;">
+                <span class="item">
+                    <span>Steak</span>
+                    <span class="time">2:14 pm, Today</span>
+                </span>
+                <span class="item">
+                    <span class="temp">32.1</span>
+                    <span class="object">Object</span>
+                </span>
+                <span class="delete">Delete</span>
+            </a>
+            <a href="javascript:;">
+                <span class="item">
+                    <span>Billy</span>
+                    <span class="time">8:00 am, Thue</span>
+                </span>
+                <span class="item">
+                    <span class="temp">36.6</span>
+                    <span class="object">Forehead</span>
+                </span>
+                <span class="delete">Delete</span>
+            </a>
+            <a href="javascript:;">
+                <span class="item">
+                    <span>Billy</span>
+                    <span class="time">18:54 pm, Mon</span>
+                </span>
+                <span class="item">
+                    <span class="temp"><img src="icons/warning.svg">39</span>
+                    <span class="object">Forehead</span>
+                </span>
+                <span class="delete">Delete</span>
+            </a>
+            <a href="javascript:;">
+                <span class="item">
+                    <span>Living room</span>
+                    <span class="time">18:54 pm, Mon</span>
+                </span>
+                <span class="item">
+                    <span class="temp">29.2 <span class="humidity">/ 56.6%</span></span>
+                    <span class="object">Ambient</span>
+                </span>
+                <span class="delete">Delete</span>
+            </a>
+
+        </div>
+
+    </div>
+
+<footer class="app-footer index-marker">
+    <div class="container">
+        <a href="#" id="goToAmbientPage">
+            <img src="icons/ambient-active.svg" id="goToAmbientPageImage"/>
+        </a>
+        <a href="#" id="goToObjectPage">
+            <img src="icons/object.svg" id="goToObjectPageImage"/>
+        </a>
+        <a href="#" id="goToForeheadPage">
+            <img src="icons/forehead.svg" id="goToForeheadPageImage"/>
+        </a>
+    </div>
+</footer>
+
+
+<script src='jquery3.3.1.min.js'></script>
+
+<script type="text/javascript">
+
+    $(function () {
+
+        var currentPage = 'index';
+        var currentTab = 'ambient';
+        var ambientTemperature = 0;
+        var objectTemperature = 0;
+        var temperatureType = 'c';
+        var currentHumidity = 0;
+
+        var ambientConfig = {
+            points: 100,
+            radius: 260,
+            max: 120,
+            peaks: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]
+        };
+
+        var objectConfig = {
+            points: 100,
+            radius: 260,
+            max: 120,
+            peaks: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]
+        };
+
+        var foreheadConfig = {
+            points: 100,
+            radius: 260,
+            max: 120,
+            peaks: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]
+        };
+
+        $('#objectIllustration').hide();
+        $('#foreheadIllustration').hide();
+        $('#foreheadWarning').hide();
+        $('.history-marker').hide();
+        $('.index-marker').show();
+        $('#humidityChart').show();
+
+
+        render(ambientConfig, ambientTemperature);
+
+        $('#historyLink').on('click', function () {
+            currentPage = 'history';
+            $('.history-marker').show();
+            $('.index-marker').hide();
+        });
+
+
+        $('#goToAmbientPage').on('click',
+            function () {
+                currentTab = 'ambient';
+                render(ambientConfig, ambientTemperature);
+                $('#goToAmbientPageImage').attr('src', 'icons/ambient-active.svg');
+                $('#goToObjectPageImage').attr('src', 'icons/object.svg');
+                $('#goToForeheadPageImage').attr('src', 'icons/forehead.svg');
+                $('#objectIllustration').hide();
+                $('#foreheadIllustration').hide();
+                $('#foreheadWarning').hide();
+                $('#humidityChart').show();
+            });
+
+        $('#goToObjectPage').on('click',
+            function () {
+                currentTab = 'object';
+                render(objectConfig, objectTemperature);
+                $('#goToAmbientPageImage').attr('src', 'icons/ambient.svg');
+                $('#goToObjectPageImage').attr('src', 'icons/object-active.svg');
+                $('#goToForeheadPageImage').attr('src', 'icons/forehead.svg');
+                $('#objectIllustration').show();
+                $('#foreheadIllustration').hide();
+                $('#foreheadWarning').hide();
+                $('#humidityChart').hide();
+            });
+
+        $('#goToForeheadPage').on('click',
+            function () {
+                currentTab = 'forehead';
+                render(objectConfig, objectTemperature);
+                $('#goToAmbientPageImage').attr('src', 'icons/ambient.svg');
+                $('#goToObjectPageImage').attr('src', 'icons/object.svg');
+                $('#goToForeheadPageImage').attr('src', 'icons/forehead-active.svg');
+                $('#objectIllustration').hide();
+                $('#foreheadIllustration').show();
+                $('#foreheadWarning').hide();
+                $('#humidityChart').hide();
+            });
+
+        $('.toggle-c').on('change',
+            function (e) {
+                if (this.checked) {
+                    temperatureType = 'c';
+                    if (currentTab === 'ambient') {
+                        render(ambientConfig, ambientTemperature);
+                    } else if (currentTab === 'object') {
+                        render(objectConfig, objectTemperature);
+                    } else if (currentTab === 'forehead') {
+                        render(objectConfig, objectTemperature);
+                    }
+                }
+            });
+
+        $('.toggle-f').on('change',
+            function (e) {
+                if (this.checked) {
+                    temperatureType = 'f';
+                    if (currentTab === 'ambient') {
+                        render(ambientConfig, ambientTemperature);
+                    } else if (currentTab === 'object') {
+                        render(objectConfig, objectTemperature);
+                    } else if (currentTab === 'forehead') {
+                        render(objectConfig, objectTemperature);
+                    }
+                }
+            });
+
+        $('#backBtn').on('click',
+            function (e) {
+                if (currentPage === 'history') {
+                    $('.history-marker').hide();
+                    $('.index-marker').show();
+                    currentPage = 'index';
+                } else {
+                    Moduware.API.Exit();
+                }
+            });
+
+        function celsius2Farenheit(value) {
+            return value * 1.8 + 32;
+        }
+
+        function farenheit2Celsius(value) {
+            return (value - 32) / 1.8;
+        }
+
+        // var index = 0;
+        // const interval = setInterval(function () {
+        //   index++;
+        //   render(ambientConfig, index);
+        // }, 250);
+
+        document.addEventListener('WebViewApiReady',
+            function () {
+
+                Moduware.v1.Module.ExecuteCommand(Moduware.Arguments[0], 'StartSensor', []);
+
+                Moduware.API.addEventListener('HardwareBackButtonPressed',
+                    () => {
+                        Moduware.API.Exit();
+                    });
+
+                Moduware.API.addEventListener('BeforeExit',
+                    () => {
+                        Moduware.v1.Module.ExecuteCommand(Moduware.Arguments[0], 'StopSensor', []);
+                    });
+
+                Moduware.v1.Module.addEventListener('MessageReceived',
+                    function (e) {
+                        if (e.ModuleUuid === Moduware.Arguments.uuid && e.Message.dataSource === 'SensorValue') {
+
+                            ambientTemperature = parseFloat(e.Message.variables.ambient_temperature);
+                            currentHumidity = parseFloat(e.Message.variables.humidity);
+                            objectTemperature = parseFloat(e.Message.variables.object_temperature);
+
+                            $('#humidyGauge').attr('stroke-dasharray', `${currentHumidity.toFixed(1)}, 100`);
+                            $('#humidtyText').text(`${currentHumidity.toFixed(1)}%`);
+
+                            if (currentTab === 'ambient') {
+                                render(ambientConfig, ambientTemperature);
+                            } else if (currentTab === 'object') {
+                                render(objectConfig, objectTemperature);
+                            } else if (currentTab === 'forehead') {
+                                render(objectConfig, objectTemperature);
+                            }
+                        }
+                    });
+            });
+
+        function render(config, temperature) {
+
+            const step = (config.max + 1) / config.points;
+            const realPeaks = config.peaks.map(peak => Math.floor(peak * (1 / step)));
+            const hueStep = 245 / config.points;
+
+            if (temperatureType === 'f') {
+                temperature = celsius2Farenheit(temperature);
+            }
+
+            const gaugeDigits = $('.gauge-digits');
+
+            gaugeDigits.html('')
+                .prepend(`<div class="title">${currentTab.toUpperCase()}<br>temperature</div>`)
+                .prepend(`<span class="digit current-digit count">${temperature.toFixed(1)}</span>`);
+
+            temperature = Math.round(temperature);
+
+            $('.gauge-outer').html('');
+
+            for (let i = 0; i < config.points; i++) {
+                const degree = i * (config.radius / (config.points - 1)) - config.radius / 2;
+                const isPeak = realPeaks.indexOf(i) > -1;
+                const gaugeInner = $('.gauge-outer').append(`<i class="bar${isPeak ? ' peak' : ''}" style="transform: rotate(${degree}deg);"></i>`);
+                const intStep = Math.ceil(step * i);
+                const intNextStep = Math.ceil(step * (i + 1));
+
+                let styles = `transition-delay: ${(i / temperature) * (i / temperature) + 1}s;`;
+
+                if (intStep <= temperature) {
+                    styles += `background-color: hsl(${130 + i * hueStep}, 100%, 50%);`;
+                }
+
+                if (intStep > temperature || (intStep <= temperature && intNextStep <= temperature)) {
+                    styles += `-webkit-transform: rotate(${degree}deg);-moz-transform: rotate(${degree}deg);-ms-transform: rotate(${degree}deg);-o-transform: rotate(${degree}deg);transform: rotate(${degree}deg);`;
+                } else {
+                    if (intNextStep > temperature) {
+                        styles += `-webkit-transform: rotate(${degree}deg) translateY(-.03em);-moz-transform: rotate(${degree}deg) translateY(-.03em);-ms-transform: rotate(${degree}deg) translateY(-.03em);-o-transform: rotate(${degree}deg) translateY(-.03em);transform: rotate(${degree}deg) translateY(-.03em);height: 28px;`;
+                    }
+                }
+
+                $('.gauge-outer').append(`<i class="bar" style="${styles}"></i>`);
+
+                if (isPeak) {
+                    const d = $(`<span class="digit">${config.peaks[realPeaks.indexOf(i)]}</span>`);
+                    const peakOffset = gaugeInner.find('.peak').last().offset();
+
+                    gaugeDigits.append(d);
+
+                    if (degree > -5 && degree < 5) {
+                        d.offset({ left: peakOffset.left - 5, top: peakOffset });
+                    } else {
+                        d.offset(peakOffset);
+                    }
+
+                    setTimeout(function () { gaugeDigits.addClass('scale'); }, 1);
+                }
+            }
+        }
+
+        setTimeout(() => {
+            const gauge = $('.gauge');
+            const digit = gauge.data('digit');
+            gauge.addClass('load');
+            setTimeout(() => {
+                gauge.find('.current-digit').text(digit).trigger('count');
+            },
+                1000);
+        },
+            500);
+    });
+
+</script>
+
 </body>
 
 </html>

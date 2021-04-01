@@ -2,7 +2,7 @@
 	"id": "nexpaq.tile.hat",
 	"name": "Temperature and Humidity",
 	"description": "Moduware T&H tile module interface",
-	"version": "2.0.0",
+	"version": "3.0.0",
 	"changes": "Complete rewrite",
 	"minumumAppVersion": "1.1.8",
 	"modules": [
