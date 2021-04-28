@@ -475,7 +475,7 @@
 
                 const step = (config.max + 1) / config.points;
                 const realPeaks = config.peaks.map(peak => Math.floor(peak * (1 / step)));
-                const hueStep = 245 / config.points;
+                const hueStep = 230 / config.points;
 
                 if (temperatureType === 'f') {
                     temperature = celsius2Farenheit(temperature);
@@ -501,7 +501,7 @@
                     let styles = `transition-delay: ${(i / temperature) * (i / temperature) + 1}s;`;
 
                     if (intStep <= temperature) {
-                        styles += `background-color: hsl(${130 + i * hueStep}, 100%, 50%);`;
+                        styles += `background-color: hsl(${205 - i * hueStep}, 100%, 50%);`;
                     }
 
                     if (intStep > temperature || (intStep <= temperature && intNextStep <= temperature)) {
