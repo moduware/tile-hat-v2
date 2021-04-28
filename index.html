@@ -2,97 +2,98 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet" href="style.css" />
     <title>Dashboard</title>
 </head>
 
 <body>
-<div class="content">
+    <div class="content">
 
-    <header class="app-header">
-        <div class="back">
-            <a href="javascript:;" id="backBtn">
-                <img src="icons/back.svg"/>
-            </a>
-        </div>
-        <h4 class="title">Temperature</h4>
-        <div class="history">
-            <a href="javascript:;" id="historyLink">
-                <img src="icons/history.svg"/>
-            </a>
-        </div>
-    </header>
-
-    <div class="wrapper index-marker">
-
-        <div class="pull-right temperature-toggle-container">
-            <div class="toggle-switch-container">
-                <input id="toggle-c" class="toggle toggle-left toggle-c" name="toggle" value="c" type="radio" checked>
-                <label for="toggle-c" class="btn">C</label>
-                <input id="toggle-f" class="toggle toggle-right toggle-f" name="toggle" value="f" type="radio">
-                <label for="toggle-f" class="btn">F</label>
+        <header class="app-header">
+            <div class="back">
+                <a href="javascript:;" id="backBtn">
+                    <img src="icons/back.svg" />
+                </a>
             </div>
-        </div>
+            <h4 class="title">Temperature</h4>
+            <div class="history">
+                <a href="javascript:;" id="historyLink">
+                    <img src="icons/history.svg" />
+                </a>
+            </div>
+        </header>
 
-        <div class="clearfix"></div>
+        <div class="wrapper index-marker">
 
-        <div class="gauge" data-digit="">
-            <div class="gauge-outer"></div>
-            <div class="gauge-inner"></div>
-            <div class="gauge-digits"></div>
-        </div>
+            <div class="pull-right temperature-toggle-container">
+                <div class="toggle-switch-container">
+                    <input id="toggle-c" class="toggle toggle-left toggle-c" name="toggle" value="c" type="radio"
+                        checked>
+                    <label for="toggle-c" class="btn">C</label>
+                    <input id="toggle-f" class="toggle toggle-right toggle-f" name="toggle" value="f" type="radio">
+                    <label for="toggle-f" class="btn">F</label>
+                </div>
+            </div>
 
-        <div class="humidity-chart" id="humidityChart">
-            <svg viewBox="0 0 36 36" class="circular-chart blue">
-                <path class="circle-bg" d="M18 2.0845
+            <div class="clearfix"></div>
+
+            <div class="gauge" data-digit="">
+                <div class="gauge-outer"></div>
+                <div class="gauge-inner"></div>
+                <div class="gauge-digits"></div>
+            </div>
+
+            <div class="humidity-chart" id="humidityChart">
+                <svg viewBox="0 0 36 36" class="circular-chart blue">
+                    <path class="circle-bg" d="M18 2.0845
                 a 15.9155 15.9155 0 0 1 0 31.831
-                a 15.9155 15.9155 0 0 1 0 -31.831"/>
-                <path id="humidyGauge" class="circle" stroke-dasharray="0, 100" d="M18 2.0845
+                a 15.9155 15.9155 0 0 1 0 -31.831" />
+                    <path id="humidyGauge" class="circle" stroke-dasharray="0, 100" d="M18 2.0845
                 a 15.9155 15.9155 0 0 1 0 31.831
-                a 15.9155 15.9155 0 0 1 0 -31.831"/>
-                <text x="18" y="15" class="text">
-                    Humidity
-                </text>
-                <text id="humidtyText" x="18" y="23" class="percentage">
-                    0%
-                </text>
-            </svg>
-        </div>
-        <div class="distance-img-wrapper" id="objectIllustration">
-            <img src="icons/object-distance.svg"/>
-        </div>
-        <div class="distance-img-wrapper" id="foreheadIllustration">
-            <img src="icons/forehead-distance.svg"/>
-        </div>
-        <div class="forehead-warning-wrapper" id="foreheadWarning">
-            <img src="icons/warning.svg"/>
-            <p>
-                Body temperature<br>higher than normal.
-            </p>
-        </div>
-        <div>
-            <a class="save-btn" href="javascript:;" id="saveBtn">Save</a>
+                a 15.9155 15.9155 0 0 1 0 -31.831" />
+                    <text x="18" y="15" class="text">
+                        Humidity
+                    </text>
+                    <text id="humidtyText" x="18" y="23" class="percentage">
+                        0%
+                    </text>
+                </svg>
+            </div>
+            <div class="distance-img-wrapper" id="objectIllustration">
+                <img src="icons/object-distance.svg" />
+            </div>
+            <div class="distance-img-wrapper" id="foreheadIllustration">
+                <img src="icons/forehead-distance.svg" />
+            </div>
+            <div class="forehead-warning-wrapper" id="foreheadWarning">
+                <img src="icons/warning.svg" />
+                <p>
+                    Body temperature<br>higher than normal.
+                </p>
+            </div>
+            <div>
+                <a class="save-btn" href="javascript:;" id="saveBtn">Save</a>
+            </div>
+
         </div>
 
-    </div>
-
-    <div class="search-wapper history-marker">
-        <a class="search-icon" href="javascript:;">
-            <img src="icons/search.svg">
-        </a>
-        <input class="form-control" type="text" placeholder="Search" id="searchHistoryTxt"/>
-        <!--<a class="mic-icon" href="javascript:;">
+        <div class="search-wapper history-marker">
+            <a class="search-icon" href="javascript:;">
+                <img src="icons/search.svg">
+            </a>
+            <input class="form-control" type="text" placeholder="Search" id="searchHistoryTxt" />
+            <!--<a class="mic-icon" href="javascript:;">
             <img src="icons/microphone.svg">
         </a>-->
-    </div>
+        </div>
 
-    <div class="history-items-wrapper scrolling-div history-marker" id="historyDiv">
+        <div class="history-items-wrapper scrolling-div history-marker" id="historyDiv">
 
-        <!--<a href="javascript:;">
+            <!--<a href="javascript:;">
             <span class="item">
                 <span>Steak</span>
                 <span class="time">2:14 pm, Today</span>
@@ -103,7 +104,7 @@
             </span>
             <span class="delete">Delete</span>
         </a>-->
-        <!--<a href="javascript:;">
+            <!--<a href="javascript:;">
             <span class="item">
                 <span>Billy</span>
                 <span class="time">8:00 am, Thue</span>
@@ -137,88 +138,88 @@
             <span class="delete">Delete</span>
         </a>-->
 
+        </div>
+
     </div>
 
-</div>
-
-<footer class="app-footer index-marker">
-    <div class="container">
-        <a href="#" id="goToAmbientPage">
-            <img src="icons/ambient-active.svg" id="goToAmbientPageImage"/>
-        </a>
-        <a href="#" id="goToObjectPage">
-            <img src="icons/object.svg" id="goToObjectPageImage"/>
-        </a>
-        <a href="#" id="goToForeheadPage">
-            <img src="icons/forehead.svg" id="goToForeheadPageImage"/>
-        </a>
-    </div>
-</footer>
+    <footer class="app-footer index-marker">
+        <div class="container">
+            <a href="#" id="goToAmbientPage">
+                <img src="icons/ambient-active.svg" id="goToAmbientPageImage" />
+            </a>
+            <a href="#" id="goToObjectPage">
+                <img src="icons/object.svg" id="goToObjectPageImage" />
+            </a>
+            <a href="#" id="goToForeheadPage">
+                <img src="icons/forehead.svg" id="goToForeheadPageImage" />
+            </a>
+        </div>
+    </footer>
 
 
-<script src="jquery.min.js"></script>
-<script src="moment.min.js"></script>
+    <script src="jquery.min.js"></script>
+    <script src="moment.min.js"></script>
 
-<script type="text/javascript">
+    <script type="text/javascript">
 
-    $(function() {
+        $(function () {
 
-        var currentPage = 'index';
-        var currentTab = 'ambient';
-        var ambientTemperature = 0;
-        var objectTemperature = 0;
-        var temperatureType = 'c';
-        var currentHumidity = 0;
-        var historyList = [];
-        var ambientConfig = {
-            points: 100,
-            radius: 260,
-            max: 120,
-            peaks: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]
-        };
-        var objectConfig = {
-            points: 100,
-            radius: 260,
-            max: 120,
-            peaks: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]
-        };
-        var foreheadConfig = {
-            points: 100,
-            radius: 260,
-            max: 120,
-            peaks: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]
-        };
+            var currentPage = 'index';
+            var currentTab = 'ambient';
+            var ambientTemperature = 0;
+            var objectTemperature = 0;
+            var temperatureType = 'c';
+            var currentHumidity = 0;
+            var historyList = [];
+            var ambientConfig = {
+                points: 100,
+                radius: 260,
+                max: 120,
+                peaks: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]
+            };
+            var objectConfig = {
+                points: 100,
+                radius: 260,
+                max: 120,
+                peaks: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]
+            };
+            var foreheadConfig = {
+                points: 100,
+                radius: 260,
+                max: 120,
+                peaks: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]
+            };
 
-        $('#objectIllustration').hide();
-        $('#foreheadIllustration').hide();
-        $('#foreheadWarning').hide();
-        $('.history-marker').hide();
-        $('.index-marker').show();
-        $('#humidityChart').show();
+            $('#objectIllustration').hide();
+            $('#foreheadIllustration').hide();
+            $('#foreheadWarning').hide();
+            $('.history-marker').hide();
+            $('.index-marker').show();
+            $('#humidityChart').show();
 
-        render(ambientConfig, ambientTemperature);
+            render(ambientConfig, ambientTemperature);
 
-        $('#historyLink').on('click',
-            function() {
-                currentPage = 'history';
-                $('.history-marker').show();
-                $('.index-marker').hide();
-                const ls = localStorage.getItem('history');
-                if (ls) {
-                    historyList = JSON.parse(ls);
-                } else {
-                    historyList = [];
-                }
-                let template = '';
-                for (let i = 0; i < historyList.length; i++) {
-                    template += createHistoryItemTemplate(historyList[i]);
-                }
+            $('#historyLink').on('click',
+                function () {
+                    currentPage = 'history';
+                    $('.history-marker').show();
+                    $('.index-marker').hide();
+                    const ls = localStorage.getItem('history');
+                    if (ls) {
+                        historyList = JSON.parse(ls);
+                    } else {
+                        historyList = [];
+                    }
+                    let template = '';
+                    for (let i = 0; i < historyList.length; i++) {
+                        template += createHistoryItemTemplate(historyList[i]);
+                    }
 
-                $('#historyDiv').html('').append(template);
-            });
+                    $('#historyDiv').html('').append(template);
+                });
 
-        function createHistoryItemTemplate(item) {
-            return `<a href="javascript:;">
+            function createHistoryItemTemplate(item) {
+                return `<a href="javascript:;">
                                 <span class="item">
                                     <span>${item.name}</span>
                                     <span class="time">${item.date}</span>
@@ -229,307 +230,320 @@
                                 </span>
                                 <span class="delete" data-id="${item.id}">Delete</span>
                             </a>`;
-        };
+            };
 
-        $('#searchHistoryTxt').on('keyup',
-            function() {
+            $('#searchHistoryTxt').on('keyup',
+                function () {
 
-                if ($(this).val()) {
+                    if ($(this).val()) {
 
-                    const tempHistoryList = historyList.filter(x => x.name.toLowerCase().includes($(this).val().toLowerCase()));
-                    let template = '';
+                        const tempHistoryList = historyList.filter(x => x.name.toLowerCase().includes($(this).val().toLowerCase()));
+                        let template = '';
 
-                    for (let i = 0; i < tempHistoryList.length; i++) {
-                        template += createHistoryItemTemplate(tempHistoryList[i]);
-                    }
+                        for (let i = 0; i < tempHistoryList.length; i++) {
+                            template += createHistoryItemTemplate(tempHistoryList[i]);
+                        }
 
-                    $('#historyDiv').html('').append(template);
-                } else {
-                    let template = '';
-                    for (let i = 0; i < historyList.length; i++) {
-                        template += createHistoryItemTemplate(historyList[i]);
-                    }
-
-                    $('#historyDiv').html('').append(template);
-                }
-            });
-
-        $('#goToAmbientPage').on('click', goToAmbient);
-
-        function goToAmbient() {
-            currentTab = 'ambient';
-            render(ambientConfig, ambientTemperature);
-            $('#goToAmbientPageImage').attr('src', 'icons/ambient-active.svg');
-            $('#goToObjectPageImage').attr('src', 'icons/object.svg');
-            $('#goToForeheadPageImage').attr('src', 'icons/forehead.svg');
-            $('#objectIllustration').hide();
-            $('#foreheadIllustration').hide();
-            $('#foreheadWarning').hide();
-            $('#humidityChart').show();
-        }
-
-        $('#goToObjectPage').on('click',
-            function() {
-                currentTab = 'object';
-                render(objectConfig, objectTemperature);
-                $('#goToAmbientPageImage').attr('src', 'icons/ambient.svg');
-                $('#goToObjectPageImage').attr('src', 'icons/object-active.svg');
-                $('#goToForeheadPageImage').attr('src', 'icons/forehead.svg');
-                $('#objectIllustration').show();
-                $('#foreheadIllustration').hide();
-                $('#foreheadWarning').hide();
-                $('#humidityChart').hide();
-            });
-
-        $('#goToForeheadPage').on('click',
-            function() {
-                currentTab = 'forehead';
-                render(objectConfig, objectTemperature);
-                $('#goToAmbientPageImage').attr('src', 'icons/ambient.svg');
-                $('#goToObjectPageImage').attr('src', 'icons/object.svg');
-                $('#goToForeheadPageImage').attr('src', 'icons/forehead-active.svg');
-                $('#objectIllustration').hide();
-                $('#foreheadIllustration').show();
-                $('#foreheadWarning').hide();
-                $('#humidityChart').hide();
-            });
-
-        $('.toggle-c').on('change',
-            function(e) {
-                if (this.checked) {
-                    temperatureType = 'c';
-                    if (currentTab === 'ambient') {
-                        render(ambientConfig, ambientTemperature);
-                    } else if (currentTab === 'object') {
-                        render(objectConfig, objectTemperature);
-                    } else if (currentTab === 'forehead') {
-                        render(objectConfig, objectTemperature);
-                    }
-                }
-            });
-
-        $('.toggle-f').on('change',
-            function(e) {
-                if (this.checked) {
-                    temperatureType = 'f';
-                    if (currentTab === 'ambient') {
-                        render(ambientConfig, ambientTemperature);
-                    } else if (currentTab === 'object') {
-                        render(objectConfig, objectTemperature);
-                    } else if (currentTab === 'forehead') {
-                        render(objectConfig, objectTemperature);
-                    }
-                }
-            });
-
-        $('#backBtn').on('click',
-            function(e) {
-                if (currentPage === 'history') {
-                    $('.history-marker').hide();
-                    $('.index-marker').show();
-                    currentPage = 'index';
-                } else {
-                    Moduware.API.Exit();
-                }
-            });
-
-        $('#saveBtn').on('click',
-            function() {
-                const name = prompt('Give it a name', '');
-                if (name) {
-                    const ls = localStorage.getItem('history');
-
-                    if (ls) {
-                        historyList = JSON.parse(ls);
+                        $('#historyDiv').html('').append(template);
                     } else {
-                        historyList = [];
+                        let template = '';
+                        for (let i = 0; i < historyList.length; i++) {
+                            template += createHistoryItemTemplate(historyList[i]);
+                        }
+
+                        $('#historyDiv').html('').append(template);
                     }
-
-                    historyList.push({
-                        name: name,
-                        id: new Date().getTime().toString(),
-                        date: `${moment().calendar()}`,
-                        tab: currentTab,
-                        tempType: temperatureType,
-                        humidity: currentHumidity.toFixed(1),
-                        temp: currentTab === 'ambient' ? ambientTemperature.toFixed(1) : currentTab === 'object' ? objectTemperature.toFixed(1) : ambientTemperature.toFixed(1)
-                    });
-
-                    localStorage.setItem('history', JSON.stringify(historyList));
-                }
-            });
-
-        $(document).on('click',
-            '#historyDiv a',
-            function(e) {
-                e.preventDefault();
-                if ($(this).hasClass('delete-btn')) {
-                    $(this).removeClass('delete-btn');
-                } else {
-                    $(this).addClass('delete-btn');
-                }
-            });
-
-        $(document).on('click',
-            '.delete',
-            function() {
-                const id = $(this).data('id').toString();
-
-                const index = historyList.findIndex(function(e) {
-                    return e.id === id;
                 });
 
-                if (index !== -1) {
-                    historyList.splice(index, 1);
-                }
+            $('#goToAmbientPage').on('click', goToAmbient);
 
-                localStorage.setItem('history', JSON.stringify(historyList));
-
-                if ($('#searchHistoryTxt').val()) {
-
-                    const tempHistoryList = historyList.filter(x => x.name.toLowerCase().includes($('#searchHistoryTxt').val().toLowerCase()));
-                    let template = '';
-
-                    for (let i = 0; i < tempHistoryList.length; i++) {
-                        template += createHistoryItemTemplate(tempHistoryList[i]);
-                    }
-
-                    $('#historyDiv').html('').append(template);
-                } else {
-                    let template = '';
-                    for (let i = 0; i < historyList.length; i++) {
-                        template += createHistoryItemTemplate(historyList[i]);
-                    }
-
-                    $('#historyDiv').html('').append(template);
-                }
-            });
-
-        function celsius2Farenheit(value) {
-            return value * 1.8 + 32;
-        }
-
-        function farenheit2Celsius(value) {
-            return (value - 32) / 1.8;
-        }
-
-        document.addEventListener('WebViewApiReady',
-            function() {
-
-                Moduware.v1.Module.ExecuteCommand(Moduware.Arguments[0], 'StartSensor', []);
-
-                Moduware.API.addEventListener('HardwareBackButtonPressed',
-                    () => {
-                        if (currentPage === 'index') {
-                            Moduware.API.Exit();
-                        } else {
-                            currentPage = 'index';
-                            $('.history-marker').hide();
-                            $('.index-marker').show();
-                            return;
-                        }
-                    });
-
-                Moduware.API.addEventListener('BeforeExit',
-                    () => {
-                        Moduware.v1.Module.ExecuteCommand(Moduware.Arguments[0], 'StopSensor', []);
-                    });
-
-                Moduware.v1.Module.addEventListener('MessageReceived',
-                    function(e) {
-                        if (e.ModuleUuid === Moduware.Arguments.uuid && e.Message.dataSource === 'SensorValue') {
-
-                            ambientTemperature = parseFloat(e.Message.variables.ambient_temperature);
-                            currentHumidity = parseFloat(e.Message.variables.humidity);
-                            objectTemperature = parseFloat(e.Message.variables.object_temperature);
-
-                            $('#humidyGauge').attr('stroke-dasharray', `${currentHumidity.toFixed(1)}, 100`);
-                            $('#humidtyText').text(`${currentHumidity.toFixed(1)}%`);
-
-                            if (currentTab === 'ambient') {
-                                render(ambientConfig, ambientTemperature);
-                            } else if (currentTab === 'object') {
-                                render(objectConfig, objectTemperature);
-                            } else if (currentTab === 'forehead') {
-                                render(objectConfig, objectTemperature);
-                            }
-                        }
-                    });
-            });
-
-        function render(config, temperature) {
-
-            const step = (config.max + 1) / config.points;
-            const realPeaks = config.peaks.map(peak => Math.floor(peak * (1 / step)));
-            const hueStep = 245 / config.points;
-
-            if (temperatureType === 'f') {
-                temperature = celsius2Farenheit(temperature);
+            function goToAmbient() {
+                currentTab = 'ambient';
+                render(ambientConfig, ambientTemperature);
+                $('#goToAmbientPageImage').attr('src', 'icons/ambient-active.svg');
+                $('#goToObjectPageImage').attr('src', 'icons/object.svg');
+                $('#goToForeheadPageImage').attr('src', 'icons/forehead.svg');
+                $('#objectIllustration').hide();
+                $('#foreheadIllustration').hide();
+                $('#foreheadWarning').hide();
+                $('#humidityChart').show();
             }
 
-            const gaugeDigits = $('.gauge-digits');
+            $('#goToObjectPage').on('click',
+                function () {
+                    currentTab = 'object';
+                    render(objectConfig, objectTemperature);
+                    $('#goToAmbientPageImage').attr('src', 'icons/ambient.svg');
+                    $('#goToObjectPageImage').attr('src', 'icons/object-active.svg');
+                    $('#goToForeheadPageImage').attr('src', 'icons/forehead.svg');
+                    $('#objectIllustration').show();
+                    $('#foreheadIllustration').hide();
+                    $('#foreheadWarning').hide();
+                    $('#humidityChart').hide();
+                });
 
-            gaugeDigits.html('')
-                .prepend(`<div class="title">${currentTab.toUpperCase()}<br>temperature</div>`)
-                .prepend(`<span class="digit current-digit count">${temperature.toFixed(1)}</span>`);
+            $('#goToForeheadPage').on('click',
+                function () {
+                    currentTab = 'forehead';
+                    render(objectConfig, bodyTempAlgorithm(objectTemperature));
+                    $('#goToAmbientPageImage').attr('src', 'icons/ambient.svg');
+                    $('#goToObjectPageImage').attr('src', 'icons/object.svg');
+                    $('#goToForeheadPageImage').attr('src', 'icons/forehead-active.svg');
+                    $('#objectIllustration').hide();
+                    $('#foreheadIllustration').show();
+                    $('#foreheadWarning').hide();
+                    $('#humidityChart').hide();
+                });
 
-            temperature = Math.round(temperature);
-
-            $('.gauge-outer').html('');
-
-            for (let i = 0; i < config.points; i++) {
-                const degree = i * (config.radius / (config.points - 1)) - config.radius / 2;
-                const isPeak = realPeaks.indexOf(i) > -1;
-                const gaugeInner = $('.gauge-outer').append(`<i class="bar${isPeak ? ' peak' : ''}" style="transform: rotate(${degree}deg);"></i>`);
-                const intStep = Math.ceil(step * i);
-                const intNextStep = Math.ceil(step * (i + 1));
-
-                let styles = `transition-delay: ${(i / temperature) * (i / temperature) + 1}s;`;
-
-                if (intStep <= temperature) {
-                    styles += `background-color: hsl(${130 + i * hueStep}, 100%, 50%);`;
-                }
-
-                if (intStep > temperature || (intStep <= temperature && intNextStep <= temperature)) {
-                    styles += `-webkit-transform: rotate(${degree}deg);-moz-transform: rotate(${degree}deg);-ms-transform: rotate(${degree}deg);-o-transform: rotate(${degree}deg);transform: rotate(${degree}deg);`;
-                } else {
-                    if (intNextStep > temperature) {
-                        styles += `-webkit-transform: rotate(${degree}deg) translateY(-.03em);-moz-transform: rotate(${degree}deg) translateY(-.03em);-ms-transform: rotate(${degree}deg) translateY(-.03em);-o-transform: rotate(${degree}deg) translateY(-.03em);transform: rotate(${degree}deg) translateY(-.03em);height: 28px;`;
+            $('.toggle-c').on('change',
+                function (e) {
+                    if (this.checked) {
+                        temperatureType = 'c';
+                        if (currentTab === 'ambient') {
+                            render(ambientConfig, ambientTemperature);
+                        } else if (currentTab === 'object') {
+                            render(objectConfig, objectTemperature);
+                        } else if (currentTab === 'forehead') {
+                            render(objectConfig, bodyTempAlgorithm(objectTemperature));
+                        }
                     }
-                }
+                });
 
-                $('.gauge-outer').append(`<i class="bar" style="${styles}"></i>`);
+            $('.toggle-f').on('change',
+                function (e) {
+                    if (this.checked) {
+                        temperatureType = 'f';
+                        if (currentTab === 'ambient') {
+                            render(ambientConfig, ambientTemperature);
+                        } else if (currentTab === 'object') {
+                            render(objectConfig, objectTemperature);
+                        } else if (currentTab === 'forehead') {
+                            render(objectConfig, bodyTempAlgorithm(objectTemperature));
+                        }
+                    }
+                });
 
-                if (isPeak) {
-                    const d = $(`<span class="digit">${config.peaks[realPeaks.indexOf(i)]}</span>`);
-                    const peakOffset = gaugeInner.find('.peak').last().offset();
-
-                    gaugeDigits.append(d);
-
-                    if (degree > -5 && degree < 5) {
-                        d.offset({ left: peakOffset.left - 5, top: peakOffset });
+            $('#backBtn').on('click',
+                function (e) {
+                    if (currentPage === 'history') {
+                        $('.history-marker').hide();
+                        $('.index-marker').show();
+                        currentPage = 'index';
                     } else {
-                        d.offset(peakOffset);
+                        Moduware.API.Exit();
+                    }
+                });
+
+            $('#saveBtn').on('click',
+                function () {
+                    const name = prompt('Give it a name', '');
+                    if (name) {
+                        const ls = localStorage.getItem('history');
+
+                        if (ls) {
+                            historyList = JSON.parse(ls);
+                        } else {
+                            historyList = [];
+                        }
+
+                        historyList.push({
+                            name: name,
+                            id: new Date().getTime().toString(),
+                            date: `${moment().calendar()}`,
+                            tab: currentTab,
+                            tempType: temperatureType,
+                            humidity: currentHumidity.toFixed(1),
+                            temp: currentTab === 'ambient' ? ambientTemperature.toFixed(1) : currentTab === 'object' ? objectTemperature.toFixed(1) : ambientTemperature.toFixed(1)
+                        });
+
+                        localStorage.setItem('history', JSON.stringify(historyList));
+                    }
+                });
+
+            $(document).on('click',
+                '#historyDiv a',
+                function (e) {
+                    e.preventDefault();
+                    if ($(this).hasClass('delete-btn')) {
+                        $(this).removeClass('delete-btn');
+                    } else {
+                        $(this).addClass('delete-btn');
+                    }
+                });
+
+            $(document).on('click',
+                '.delete',
+                function () {
+                    const id = $(this).data('id').toString();
+
+                    const index = historyList.findIndex(function (e) {
+                        return e.id === id;
+                    });
+
+                    if (index !== -1) {
+                        historyList.splice(index, 1);
                     }
 
-                    setTimeout(function() { gaugeDigits.addClass('scale'); }, 1);
+                    localStorage.setItem('history', JSON.stringify(historyList));
+
+                    if ($('#searchHistoryTxt').val()) {
+
+                        const tempHistoryList = historyList.filter(x => x.name.toLowerCase().includes($('#searchHistoryTxt').val().toLowerCase()));
+                        let template = '';
+
+                        for (let i = 0; i < tempHistoryList.length; i++) {
+                            template += createHistoryItemTemplate(tempHistoryList[i]);
+                        }
+
+                        $('#historyDiv').html('').append(template);
+                    } else {
+                        let template = '';
+                        for (let i = 0; i < historyList.length; i++) {
+                            template += createHistoryItemTemplate(historyList[i]);
+                        }
+
+                        $('#historyDiv').html('').append(template);
+                    }
+                });
+
+            function celsius2Farenheit(value) {
+                return value * 1.8 + 32;
+            }
+
+            function farenheit2Celsius(value) {
+                return (value - 32) / 1.8;
+            }
+
+            document.addEventListener('WebViewApiReady',
+                function () {
+
+                    Moduware.v1.Module.ExecuteCommand(Moduware.Arguments[0], 'StartSensor', []);
+
+                    Moduware.API.addEventListener('HardwareBackButtonPressed',
+                        () => {
+                            if (currentPage === 'index') {
+                                Moduware.API.Exit();
+                            } else {
+                                currentPage = 'index';
+                                $('.history-marker').hide();
+                                $('.index-marker').show();
+                                return;
+                            }
+                        });
+
+                    Moduware.API.addEventListener('BeforeExit',
+                        () => {
+                            Moduware.v1.Module.ExecuteCommand(Moduware.Arguments[0], 'StopSensor', []);
+                        });
+
+                    Moduware.v1.Module.addEventListener('MessageReceived',
+                        function (e) {
+                            if (e.ModuleUuid === Moduware.Arguments.uuid && e.Message.dataSource === 'SensorValue') {
+
+                                ambientTemperature = parseFloat(e.Message.variables.ambient_temperature);
+                                currentHumidity = parseFloat(e.Message.variables.humidity);
+                                objectTemperature = parseFloat(e.Message.variables.object_temperature);
+
+                                $('#humidyGauge').attr('stroke-dasharray', `${currentHumidity.toFixed(1)}, 100`);
+                                $('#humidtyText').text(`${currentHumidity.toFixed(1)}%`);
+
+                                if (currentTab === 'ambient') {
+                                    render(ambientConfig, ambientTemperature);
+                                } else if (currentTab === 'object') {
+                                    render(objectConfig, objectTemperature);
+                                } else if (currentTab === 'forehead') {
+                                    render(objectConfig, bodyTempAlgorithm(objectTemperature));
+                                }
+                            }
+                        });
+                });
+
+            function bodyTempAlgorithm(objectTemp) {
+                let bodyTemp =
+                    (-0.000125 * Math.pow(objectTemp, 6))
+                    + (0.0283429488 * Math.pow(objectTemp, 5))
+                    + (-2.67004808 * Math.pow(objectTemp, 4))
+                    + (133.762569 * Math.pow(objectTemp, 3))
+                    + (-3758.41829 * Math.pow(objectTemp, 2))
+                    + (56155.4892 * objectTemp)
+                    - 348548.755
+                    + objectTemp;
+                return bodyTemp;
+            }
+
+            function render(config, temperature) {
+
+                const step = (config.max + 1) / config.points;
+                const realPeaks = config.peaks.map(peak => Math.floor(peak * (1 / step)));
+                const hueStep = 245 / config.points;
+
+                if (temperatureType === 'f') {
+                    temperature = celsius2Farenheit(temperature);
+                }
+
+                const gaugeDigits = $('.gauge-digits');
+
+                gaugeDigits.html('')
+                    .prepend(`<div class="title">${currentTab.toUpperCase()}<br>temperature</div>`)
+                    .prepend(`<span class="digit current-digit count">${temperature.toFixed(1)}</span>`);
+
+                temperature = Math.round(temperature);
+
+                $('.gauge-outer').html('');
+
+                for (let i = 0; i < config.points; i++) {
+                    const degree = i * (config.radius / (config.points - 1)) - config.radius / 2;
+                    const isPeak = realPeaks.indexOf(i) > -1;
+                    const gaugeInner = $('.gauge-outer').append(`<i class="bar${isPeak ? ' peak' : ''}" style="transform: rotate(${degree}deg);"></i>`);
+                    const intStep = Math.ceil(step * i);
+                    const intNextStep = Math.ceil(step * (i + 1));
+
+                    let styles = `transition-delay: ${(i / temperature) * (i / temperature) + 1}s;`;
+
+                    if (intStep <= temperature) {
+                        styles += `background-color: hsl(${130 + i * hueStep}, 100%, 50%);`;
+                    }
+
+                    if (intStep > temperature || (intStep <= temperature && intNextStep <= temperature)) {
+                        styles += `-webkit-transform: rotate(${degree}deg);-moz-transform: rotate(${degree}deg);-ms-transform: rotate(${degree}deg);-o-transform: rotate(${degree}deg);transform: rotate(${degree}deg);`;
+                    } else {
+                        if (intNextStep > temperature) {
+                            styles += `-webkit-transform: rotate(${degree}deg) translateY(-.03em);-moz-transform: rotate(${degree}deg) translateY(-.03em);-ms-transform: rotate(${degree}deg) translateY(-.03em);-o-transform: rotate(${degree}deg) translateY(-.03em);transform: rotate(${degree}deg) translateY(-.03em);height: 28px;`;
+                        }
+                    }
+
+                    $('.gauge-outer').append(`<i class="bar" style="${styles}"></i>`);
+
+                    if (isPeak) {
+                        const d = $(`<span class="digit">${config.peaks[realPeaks.indexOf(i)]}</span>`);
+                        const peakOffset = gaugeInner.find('.peak').last().offset();
+
+                        gaugeDigits.append(d);
+
+                        if (degree > -5 && degree < 5) {
+                            d.offset({ left: peakOffset.left - 5, top: peakOffset });
+                        } else {
+                            d.offset(peakOffset);
+                        }
+
+                        setTimeout(function () { gaugeDigits.addClass('scale'); }, 1);
+                    }
                 }
             }
-        }
 
-        setTimeout(() => {
+            setTimeout(() => {
                 const gauge = $('.gauge');
                 const digit = gauge.data('digit');
                 gauge.addClass('load');
                 setTimeout(() => {
-                        gauge.find('.current-digit').text(digit).trigger('count');
-                    },
+                    gauge.find('.current-digit').text(digit).trigger('count');
+                },
                     1000);
             },
-            500);
-    });
+                500);
+        });
 
-</script>
+    </script>
 
 </body>
 
