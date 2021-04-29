@@ -59,7 +59,7 @@
                         Humidity
                     </text>
                     <text id="humidtyText" x="18" y="23" class="percentage">
-                        0%
+                        <span>0%</span>
                     </text>
                 </svg>
             </div>
@@ -527,7 +527,7 @@
                     let styles = `transition-delay: ${(i / temperature) * (i / temperature) + 1}s;`;
 
                     if (intStep <= temperature) {
-                        styles += `background-color: hsl(${205 - i * hueStep}, 100%, 50%);`;
+                        styles += `background-color: hsl(${201 - i * hueStep}, 94%, 50%);`;
                     }
 
                     if (intStep > temperature || (intStep <= temperature && intNextStep <= temperature)) {

@@ -85,11 +85,13 @@ a {
     .app-header .back {
         position: absolute;
         left: 0;
+        top: 0;
     }
 
-        .app-header .history a, .app-header .back a {
-            padding: 8px 16px;
-        }
+    .app-header .history a, .app-header .back a {
+        padding: 19px 20px;
+        display: block;
+    }
 
     .app-header .close a, .app-header .filter a {
         padding: 8px 10px;
@@ -475,18 +477,18 @@ h6 {
 }
 
 .gauge-digits {
-    position: absolute;
-    height: 168px;
-    width: 168px;
-    top: 50px;
-    left: 50%;
-    transform: translateX(-50%);
-    color: rgba(0, 0, 0, 0);
-    opacity: 0;
-    transition: opacity 0.5s 0.5s;
-    background-color: #fff;
-    border-radius: 50%;
-    box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.15);
+	position: absolute;
+	height: 210px;
+	width: 210px;
+	top: 30px;
+	left: 50%;
+	transform: translateX(-50%);
+	color: rgba(0, 0, 0, 0);
+	opacity: 0;
+	transition: opacity 0.5s 0.5s;
+	background-color: #fff;
+	border-radius: 50%;
+	box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.15);
 }
 
 .gauge.load .gauge-digits {
@@ -507,7 +509,7 @@ h6 {
     left: 50%;
     top: 64%;
     transform: translate(-50%, -50%);
-    font-size: 40px;
+    font-size: 50px;
     font-weight: 700;
     color: #283945;
 }
@@ -518,15 +520,16 @@ h6 {
     width: 100%;
     color: #6F7B83;
     text-align: center;
-    margin-top: 45px;
+    margin-top: 56px;
 }
 
 
 /*---------------------*/
 .humidity-chart {
-    width: 125px;
-    height: 125px;
+    width: 135px;
+    height: 135px;
     margin: auto;
+    position: relative;
 }
 
     .humidity-chart .circular-chart {
@@ -537,12 +540,12 @@ h6 {
     .humidity-chart .circle-bg {
         fill: none;
         stroke: rgba(0,0,0,0.05);
-        stroke-width: 1.5;
+        stroke-width: 0.85;
     }
 
     .humidity-chart .circle {
-        fill: #fff;
-        stroke-width: 1.5;
+        fill: transparent;
+        stroke-width: 0.85;
         stroke-linecap: round;
         animation: progress 1s ease-out forwards;
     }
@@ -566,6 +569,24 @@ h6 {
 
 .humidity-chart .text {
     fill: #666;
-    font-size: 4.3px;
+    font-size: 3.5px;
     text-anchor: middle;
+}
+
+.humidity-chart span {
+	position: absolute;
+	top: 17px;
+	left: 17px;
+	margin: auto;
+	width: 102px;
+	height: 102px;
+	background-color: #fff;
+	border-radius: 50%;
+	text-align: center;
+	box-shadow: 0px 3px 4px rgba(10, 35, 50, 0.1);
+	font-size: 24px;
+	font-weight: 700;
+	color: #283945;
+	z-index: -1;
+	padding-top: 45px;
 }
