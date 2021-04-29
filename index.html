@@ -346,6 +346,15 @@
                             historyList = [];
                         }
 
+                        let t = 0;
+
+                        if (currentTab === 'ambient') {
+                            t = ambientTemperature.toFixed(1);
+                        } else if (currentTab === 'object') {
+                            t = objectTemperature.toFixed(1)
+                        } else {
+                            t = bodyTempAlgorithm(objectTemperature).toFixed(1);
+                        }
                         historyList.push({
                             name: name,
                             id: new Date().getTime().toString(),
@@ -353,7 +362,7 @@
                             tab: currentTab,
                             tempType: temperatureType,
                             humidity: currentHumidity.toFixed(1),
-                            temp: currentTab === 'ambient' ? ambientTemperature.toFixed(1) : currentTab === 'object' ? objectTemperature.toFixed(1) : ambientTemperature.toFixed(1)
+                            temp: t
                         });
 
                         localStorage.setItem('history', JSON.stringify(historyList));
@@ -459,16 +468,26 @@
                 });
 
             function bodyTempAlgorithm(objectTemp) {
-                let bodyTemp =
-                    (-0.000125 * Math.pow(objectTemp, 6))
-                    + (0.0283429488 * Math.pow(objectTemp, 5))
-                    + (-2.67004808 * Math.pow(objectTemp, 4))
-                    + (133.762569 * Math.pow(objectTemp, 3))
-                    + (-3758.41829 * Math.pow(objectTemp, 2))
-                    + (56155.4892 * objectTemp)
-                    - 348548.755
-                    + objectTemp;
-                return bodyTemp;
+                if (objectTemp > 29 && objectTemp < 45) {
+                    let bodyTemp =
+                        (-0.000125 * Math.pow(objectTemp, 6))
+                        + (0.0283429488 * Math.pow(objectTemp, 5))
+                        + (-2.67004808 * Math.pow(objectTemp, 4))
+                        + (133.762569 * Math.pow(objectTemp, 3))
+                        + (-3758.41829 * Math.pow(objectTemp, 2))
+                        + (56155.4892 * objectTemp)
+                        - 348548.755
+                        + objectTemp;
+
+                    if (bodyTemp < 0) {
+                        bodyTemp = 0;
+                    }
+
+                    return bodyTemp;
+                } else {
+                    return 0;
+                }
+
             }
 
             function render(config, temperature) {
@@ -483,9 +502,16 @@
 
                 const gaugeDigits = $('.gauge-digits');
 
-                gaugeDigits.html('')
-                    .prepend(`<div class="title">${currentTab.toUpperCase()}<br>temperature</div>`)
-                    .prepend(`<span class="digit current-digit count">${temperature.toFixed(1)}</span>`);
+                if (currentTab === 'forehead' && temperature === 0) {
+                    gaugeDigits.html('')
+                        .prepend(`<div class="title">${currentTab.toUpperCase()}<br>temperature</div>`)
+                        .prepend(`<span class="digit current-digit count">__</span>`);
+                } else {
+                    gaugeDigits.html('')
+                        .prepend(`<div class="title">${currentTab.toUpperCase()}<br>temperature</div>`)
+                        .prepend(`<span class="digit current-digit count">${temperature.toFixed(1)}</span>`);
+                }
+
 
                 temperature = Math.round(temperature);
 
