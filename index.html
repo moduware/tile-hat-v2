@@ -165,7 +165,7 @@
         $(function () {
 
             var currentPage = 'index';
-            var currentTab = 'ambient';
+            var currentTab = 'Ambient';
             var ambientTemperature = 0;
             var objectTemperature = 0;
             var temperatureType = 'c';
@@ -271,7 +271,7 @@
 
             $('#goToObjectPage').on('click',
                 function () {
-                    currentTab = 'object';
+                    currentTab = 'Object';
                     render(objectConfig, objectTemperature);
                     $('#goToAmbientPageImage').attr('src', 'icons/ambient.svg');
                     $('#goToObjectPageImage').attr('src', 'icons/object-active.svg');
@@ -284,7 +284,7 @@
 
             $('#goToForeheadPage').on('click',
                 function () {
-                    currentTab = 'forehead';
+                    currentTab = 'Forehead';
                     render(objectConfig, bodyTempAlgorithm(objectTemperature));
                     $('#goToAmbientPageImage').attr('src', 'icons/ambient.svg');
                     $('#goToObjectPageImage').attr('src', 'icons/object.svg');
@@ -504,11 +504,11 @@
 
                 if (currentTab === 'forehead' && temperature === 0) {
                     gaugeDigits.html('')
-                        .prepend(`<div class="title">${currentTab.toUpperCase()}<br>temperature</div>`)
+                        .prepend(`<div class="title">${currentTab}<br>temperature</div>`)
                         .prepend(`<span class="digit current-digit count">__</span>`);
                 } else {
                     gaugeDigits.html('')
-                        .prepend(`<div class="title">${currentTab.toUpperCase()}<br>temperature</div>`)
+                        .prepend(`<div class="title">${currentTab}<br>temperature</div>`)
                         .prepend(`<span class="digit current-digit count">${temperature.toFixed(1)}</span>`);
                 }
 

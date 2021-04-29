@@ -421,7 +421,7 @@ h6 {
 .gauge {
     position: relative;
     width: 260px;
-    height: 260px;
+    height: 250px;
     margin: 0 auto;
     font-size: 3em;
     direction: ltr;
