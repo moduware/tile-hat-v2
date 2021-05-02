@@ -3,23 +3,24 @@
 
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0" />
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css" />
-    <title>Dashboard</title>
+    <title>tile hat v2</title>
 </head>
 
 <body>
     <div class="content">
 
+        <!-- <span></span> -->
         <header class="app-header">
             <div class="back">
                 <a href="javascript:;" id="backBtn">
                     <img src="icons/back.svg" />
                 </a>
             </div>
-            <h4 class="title">Temperature</h4>
+            <h4 class="title"><span class="translate" data-translate="title">Temperature</span></h4>
             <div class="history">
                 <a href="javascript:;" id="historyLink">
                     <img src="icons/history.svg" />
@@ -55,11 +56,10 @@
                     <path id="humidyGauge" class="circle" stroke-dasharray="0, 100" d="M18 2.0845
                 a 15.9155 15.9155 0 0 1 0 31.831
                 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                    <text x="18" y="15" class="text">
+                    <text x="18" y="15" class="text translate" data-translate="humidity">
                         Humidity
                     </text>
                     <text id="humidtyText" x="18" y="23" class="percentage">
-                        <span>0%</span>
                     </text>
                 </svg>
             </div>
@@ -76,7 +76,7 @@
                 </p>
             </div>
             <div>
-                <a class="save-btn" href="javascript:;" id="saveBtn">Save</a>
+                <a class="save-btn translate" data-translate="save" href="javascript:;" id="saveBtn">Save</a>
             </div>
 
         </div>
@@ -85,58 +85,14 @@
             <a class="search-icon" href="javascript:;">
                 <img src="icons/search.svg">
             </a>
-            <input class="form-control" type="text" placeholder="Search" id="searchHistoryTxt" />
+            <input class="form-control translate" data-translate="search" type="text" placeholder="Search"
+                id="searchHistoryTxt" />
             <!--<a class="mic-icon" href="javascript:;">
             <img src="icons/microphone.svg">
         </a>-->
         </div>
 
         <div class="history-items-wrapper scrolling-div history-marker" id="historyDiv">
-
-            <!--<a href="javascript:;">
-            <span class="item">
-                <span>Steak</span>
-                <span class="time">2:14 pm, Today</span>
-            </span>
-            <span class="item">
-                <span class="temp">32.1</span>
-                <span class="object">Object</span>
-            </span>
-            <span class="delete">Delete</span>
-        </a>-->
-            <!--<a href="javascript:;">
-            <span class="item">
-                <span>Billy</span>
-                <span class="time">8:00 am, Thue</span>
-            </span>
-            <span class="item">
-                <span class="temp">36.6</span>
-                <span class="object">Forehead</span>
-            </span>
-            <span class="delete">Delete</span>
-        </a>
-        <a href="javascript:;">
-            <span class="item">
-                <span>Billy</span>
-                <span class="time">18:54 pm, Mon</span>
-            </span>
-            <span class="item">
-                <span class="temp"><img src="icons/warning.svg">39</span>
-                <span class="object">Forehead</span>
-            </span>
-            <span class="delete">Delete</span>
-        </a>
-        <a href="javascript:;">
-            <span class="item">
-                <span>Living room</span>
-                <span class="time">18:54 pm, Mon</span>
-            </span>
-            <span class="item">
-                <span class="temp">29.2 <span class="humidity">/ 56.6%</span></span>
-                <span class="object">Ambient</span>
-            </span>
-            <span class="delete">Delete</span>
-        </a>-->
 
         </div>
 
@@ -163,7 +119,7 @@
     <script type="text/javascript">
 
         $(function () {
-
+            console.log(moment.locales());
             var currentPage = 'index';
             var currentTab = 'Ambient';
             var ambientTemperature = 0;
@@ -171,6 +127,8 @@
             var temperatureType = 'c';
             var currentHumidity = 0;
             var historyList = [];
+            var language = 'en';
+
             var ambientConfig = {
                 points: 100,
                 radius: 260,
@@ -219,6 +177,18 @@
                 });
 
             function createHistoryItemTemplate(item) {
+
+                let itemTab = item.tab;
+                if (language === 'zh') {
+                    if (itemTab === 'Ambient') {
+                        itemTab = '周围';
+                    } else if (itemTab === 'Object') {
+                        itemTab = '目的';
+                    } else {
+                        itemTab = '前额';
+                    }
+                }
+
                 return `<a href="javascript:;">
                                 <span class="item">
                                     <span>${item.name}</span>
@@ -226,7 +196,7 @@
                                 </span>
                                 <span class="item">
                                     <span class="temp">${item.temp}${item.tab === 'ambient' ? ` / ${item.humidity}%` : ''}</span>
-                                    <span class="object">${item.tab}</span>
+                                    <span class="object">${itemTab}</span>
                                 </span>
                                 <span class="delete" data-id="${item.id}">Delete</span>
                             </a>`;
@@ -299,11 +269,11 @@
                 function (e) {
                     if (this.checked) {
                         temperatureType = 'c';
-                        if (currentTab === 'ambient') {
+                        if (currentTab === 'Ambient') {
                             render(ambientConfig, ambientTemperature);
-                        } else if (currentTab === 'object') {
+                        } else if (currentTab === 'Object') {
                             render(objectConfig, objectTemperature);
-                        } else if (currentTab === 'forehead') {
+                        } else if (currentTab === 'Forehead') {
                             render(objectConfig, bodyTempAlgorithm(objectTemperature));
                         }
                     }
@@ -313,11 +283,11 @@
                 function (e) {
                     if (this.checked) {
                         temperatureType = 'f';
-                        if (currentTab === 'ambient') {
+                        if (currentTab === 'Ambient') {
                             render(ambientConfig, ambientTemperature);
-                        } else if (currentTab === 'object') {
+                        } else if (currentTab === 'Object') {
                             render(objectConfig, objectTemperature);
-                        } else if (currentTab === 'forehead') {
+                        } else if (currentTab === 'Forehead') {
                             render(objectConfig, bodyTempAlgorithm(objectTemperature));
                         }
                     }
@@ -336,7 +306,7 @@
 
             $('#saveBtn').on('click',
                 function () {
-                    const name = prompt('Give it a name', '');
+                    const name = prompt(`${language === 'en' ? 'Give it a name' : '给它起个名字'}`, '');
                     if (name) {
                         const ls = localStorage.getItem('history');
 
@@ -348,9 +318,14 @@
 
                         let t = 0;
 
-                        if (currentTab === 'ambient') {
+                        if (language === 'en') {
+                            moment.locale('en');
+                        } else {
+                            moment.locale('zh-cn')
+                        }
+                        if (currentTab === 'Ambient') {
                             t = ambientTemperature.toFixed(1);
-                        } else if (currentTab === 'object') {
+                        } else if (currentTab === 'Object') {
                             t = objectTemperature.toFixed(1)
                         } else {
                             t = bodyTempAlgorithm(objectTemperature).toFixed(1);
@@ -426,6 +401,45 @@
             document.addEventListener('WebViewApiReady',
                 function () {
 
+                    language = Moduware.Arguments.language;
+
+                    //moment.locale(language);
+
+                    $('.translate').each(function (index, element) {
+                        switch ($(element).data('translate')) {
+                            case 'title':
+                                if (language === 'en') {
+                                    $(element).text('Temperature');
+                                } else {
+                                    $(element).text('温度');
+                                }
+                                break;
+
+                            case 'humidity':
+                                if (language === 'en') {
+                                    $(element).text('Humidity');
+                                } else {
+                                    $(element).text('湿度');
+                                }
+                                break;
+                            case 'save':
+                                if (language === 'en') {
+                                    $(element).text('Save');
+                                } else {
+                                    $(element).text('保存');
+                                }
+                                break;
+
+                            case 'search':
+                                if (language === 'en') {
+                                    $(element).attr('placeholder', 'Search');
+                                } else {
+                                    $(element).attr('placeholder', '搜索');
+                                }
+                                break;
+                        }
+                    });
+
                     Moduware.v1.Module.ExecuteCommand(Moduware.Arguments[0], 'StartSensor', []);
 
                     Moduware.API.addEventListener('HardwareBackButtonPressed',
@@ -456,11 +470,11 @@
                                 $('#humidyGauge').attr('stroke-dasharray', `${currentHumidity.toFixed(1)}, 100`);
                                 $('#humidtyText').text(`${currentHumidity.toFixed(1)}%`);
 
-                                if (currentTab === 'ambient') {
+                                if (currentTab === 'Ambient') {
                                     render(ambientConfig, ambientTemperature);
-                                } else if (currentTab === 'object') {
+                                } else if (currentTab === 'Object') {
                                     render(objectConfig, objectTemperature);
-                                } else if (currentTab === 'forehead') {
+                                } else if (currentTab === 'Forehead') {
                                     render(objectConfig, bodyTempAlgorithm(objectTemperature));
                                 }
                             }
@@ -482,7 +496,6 @@
                     if (bodyTemp < 0) {
                         bodyTemp = 0;
                     }
-
                     return bodyTemp;
                 } else {
                     return 0;
@@ -496,19 +509,30 @@
                 const realPeaks = config.peaks.map(peak => Math.floor(peak * (1 / step)));
                 const hueStep = 230 / config.points;
 
+                let currentTabTranslated = currentTab;
+                if (language === 'zh') {
+                    if (currentTab === 'Ambient') {
+                        currentTabTranslated = '周围';
+                    } else if (currentTab === 'Object') {
+                        currentTabTranslated = '目的';
+                    } else {
+                        currentTabTranslated = '前额';
+                    }
+                }
+
                 if (temperatureType === 'f') {
                     temperature = celsius2Farenheit(temperature);
                 }
 
                 const gaugeDigits = $('.gauge-digits');
 
-                if (currentTab === 'forehead' && temperature === 0) {
+                if (currentTab === 'Forehead' && ((temperature === 0 && temperatureType === 'c') || (temperature === 32 && temperatureType === 'f'))) {
                     gaugeDigits.html('')
-                        .prepend(`<div class="title">${currentTab}<br>temperature</div>`)
+                        .prepend(`<div class="title">${currentTabTranslated}<br>${language === 'en' ? 'temperature' : '温度'}</div>`)
                         .prepend(`<span class="digit current-digit count">__</span>`);
                 } else {
                     gaugeDigits.html('')
-                        .prepend(`<div class="title">${currentTab}<br>temperature</div>`)
+                        .prepend(`<div class="title">${currentTabTranslated}<br>${language === 'en' ? 'temperature' : '温度'}</div>`)
                         .prepend(`<span class="digit current-digit count">${temperature.toFixed(1)}</span>`);
                 }
 
