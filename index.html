@@ -29,14 +29,15 @@
         </header>
 
         <div class="wrapper index-marker">
-
-            <div class="pull-right temperature-toggle-container">
-                <div class="toggle-switch-container">
-                    <input id="toggle-c" class="toggle toggle-left toggle-c" name="toggle" value="c" type="radio"
-                        checked>
-                    <label for="toggle-c" class="btn">C</label>
-                    <input id="toggle-f" class="toggle toggle-right toggle-f" name="toggle" value="f" type="radio">
-                    <label for="toggle-f" class="btn">F</label>
+            
+            <div class="pull-right new-toggle-container">
+                <label class="switch">
+                    <input type="checkbox" id="toggle-temp">
+                    <span class="slider round"></span>
+                </label>
+                <div class="temp-container">
+                    <p class="celcius-text active">C</p>
+                    <p class="fahrenheit-text">F</p>
                 </div>
             </div>
 
@@ -115,11 +116,11 @@
 
     <script src="jquery.min.js"></script>
     <script src="moment.min.js"></script>
+    <script src="rainbowvis.js"></script>
 
     <script type="text/javascript">
 
         $(function () {
-            console.log(moment.locales());
             var currentPage = 'index';
             var currentTab = 'Ambient';
             var ambientTemperature = 0;
@@ -128,6 +129,7 @@
             var currentHumidity = 0;
             var historyList = [];
             var language = 'en';
+            var colour = new Rainbow();
 
             var ambientConfig = {
                 points: 100,
@@ -136,13 +138,13 @@
                 peaks: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]
             };
             var objectConfig = {
-                points: 100,
+                points: 70,
                 radius: 260,
                 max: 120,
                 peaks: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]
             };
             var foreheadConfig = {
-                points: 100,
+                points: 40,
                 radius: 260,
                 max: 120,
                 peaks: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]
@@ -255,7 +257,7 @@
             $('#goToForeheadPage').on('click',
                 function () {
                     currentTab = 'Forehead';
-                    render(objectConfig, bodyTempAlgorithm(objectTemperature));
+                    render(foreheadConfig, bodyTempAlgorithm(objectTemperature));
                     $('#goToAmbientPageImage').attr('src', 'icons/ambient.svg');
                     $('#goToObjectPageImage').attr('src', 'icons/object.svg');
                     $('#goToForeheadPageImage').attr('src', 'icons/forehead-active.svg');
@@ -292,6 +294,32 @@
                         }
                     }
                 });
+            
+            $('#toggle-temp').on('change', function(e) {
+                if (this.checked) {
+                    $('.celcius-text').removeClass('active');
+                    $('.fahrenheit-text').addClass('active');
+                    temperatureType = 'f';
+                    if (currentTab === 'Ambient') {
+                        render(ambientConfig, ambientTemperature);
+                    } else if (currentTab === 'Object') {
+                        render(objectConfig, objectTemperature);
+                    } else if (currentTab === 'Forehead') {
+                        render(foreheadConfig, bodyTempAlgorithm(objectTemperature));
+                    }
+                } else {
+                    $('.fahrenheit-text').removeClass('active');
+                    $('.celcius-text').addClass('active');
+                    temperatureType = 'c';
+                    if (currentTab === 'Ambient') {
+                        render(ambientConfig, ambientTemperature);
+                    } else if (currentTab === 'Object') {
+                        render(objectConfig, objectTemperature);
+                    } else if (currentTab === 'Forehead') {
+                        render(foreheadConfig, bodyTempAlgorithm(objectTemperature));
+                    }
+                }
+            });
 
             $('#backBtn').on('click',
                 function (e) {
@@ -507,7 +535,18 @@
 
                 const step = (config.max + 1) / config.points;
                 const realPeaks = config.peaks.map(peak => Math.floor(peak * (1 / step)));
-                const hueStep = 230 / config.points;
+                const hueStep = 230 / config.points; // (100)
+
+                let currentTabTranslated = currentTab;
+                if (language === 'zh') {
+                    if (currentTab === 'Ambient') {
+                        currentTabTranslated = '周围';
+                    } else if (currentTab === 'Object') {
+                        currentTabTranslated = '目的';
+                    } else {
+                        currentTabTranslated = '前额';
+                    }
+                }
 
                 let currentTabTranslated = currentTab;
                 if (language === 'zh') {
@@ -548,10 +587,13 @@
                     const intStep = Math.ceil(step * i);
                     const intNextStep = Math.ceil(step * (i + 1));
 
+                    colour.setNumberRange(1, config.points);
+                    colour.setSpectrum('#09A5F7', '#F1C50F', '#E9434D');
+
                     let styles = `transition-delay: ${(i / temperature) * (i / temperature) + 1}s;`;
 
                     if (intStep <= temperature) {
-                        styles += `background-color: hsl(${201 - i * hueStep}, 94%, 50%);`;
+                        styles += `background-color: #${colour.colourAt(i + 1)};`;
                     }
 
                     if (intStep > temperature || (intStep <= temperature && intNextStep <= temperature)) {
@@ -591,8 +633,23 @@
                     1000);
             },
                 500);
-        });
 
+            function handleResizeGauge() {
+                const height = $(window).height();
+                if (height < 600) {
+                    $('.gauge').css("transform", `scale(${height/600})`);
+                    if (currentTab === 'Ambient') {
+                        $('.humidity-chart').css("margin-top", `-${600 - height}px`)
+                    } else {
+                        const value = 50 + (-600 + height);
+                        $('.distance-img-wrapper').css("margin-top", `${value}px`);
+                    }
+                }
+            }
+
+            $('document').ready(handleResizeGauge);
+            $(window).on('resize', handleResizeGauge);
+        });
     </script>
 
 </body>
