@@ -548,17 +548,6 @@
                     }
                 }
 
-                let currentTabTranslated = currentTab;
-                if (language === 'zh') {
-                    if (currentTab === 'Ambient') {
-                        currentTabTranslated = '周围';
-                    } else if (currentTab === 'Object') {
-                        currentTabTranslated = '目的';
-                    } else {
-                        currentTabTranslated = '前额';
-                    }
-                }
-
                 if (temperatureType === 'f') {
                     temperature = celsius2Farenheit(temperature);
                 }
