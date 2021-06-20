@@ -197,7 +197,7 @@
                                     <span class="time">${item.date}</span>
                                 </span>
                                 <span class="item">
-                                    <span class="temp">${item.temp}${item.tab === 'ambient' ? ` / ${item.humidity}%` : ''}</span>
+                                    <span class="temp">${item.temp}°${item.tempType.toUpperCase()}${item.tab === 'Ambient' ? ` / ${item.humidity}%` : ''}</span>
                                     <span class="object">${itemTab}</span>
                                 </span>
                                 <span class="delete" data-id="${item.id}">Delete</span>
@@ -294,9 +294,17 @@
                         }
                     }
                 });
-            
-            $('#toggle-temp').on('change', function(e) {
-                if (this.checked) {
+
+            function debounce(func, timeout = 300){
+                let timer;
+                return (...args) => {
+                    clearTimeout(timer);
+                    timer = setTimeout(() => { func.apply(this, args); }, timeout);
+                };
+            }
+
+            function toggleChange(that) {
+                if (that.checked) {
                     $('.celcius-text').removeClass('active');
                     $('.fahrenheit-text').addClass('active');
                     temperatureType = 'f';
@@ -319,6 +327,13 @@
                         render(foreheadConfig, bodyTempAlgorithm(objectTemperature));
                     }
                 }
+            }
+
+            const handleToggleChange = debounce((that) => toggleChange(that));
+            
+            $('#toggle-temp').on('change', function() {
+                let that = this;
+                handleToggleChange(that);
             });
 
             $('#backBtn').on('click',
@@ -365,7 +380,7 @@
                             tab: currentTab,
                             tempType: temperatureType,
                             humidity: currentHumidity.toFixed(1),
-                            temp: t
+                            temp: temperatureType === 'c' ? t : celsius2Farenheit(t)
                         });
 
                         localStorage.setItem('history', JSON.stringify(historyList));
@@ -503,7 +518,7 @@
                                 } else if (currentTab === 'Object') {
                                     render(objectConfig, objectTemperature);
                                 } else if (currentTab === 'Forehead') {
-                                    render(objectConfig, bodyTempAlgorithm(objectTemperature));
+                                    render(foreheadConfig, bodyTempAlgorithm(objectTemperature));
                                 }
                             }
                         });

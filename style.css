@@ -154,6 +154,17 @@ a {
     display: block;
     color: #112331;
     position: relative;
+    transition: all 500ms ease;
+}
+
+.history-items-wrapper a.delete-btn {
+    padding: 10px 20px;
+    background-color: #fff;
+    margin-bottom: 1px;
+    display: block;
+    color: #112331;
+    position: relative;
+    transform: translateX(-95px);
 }
 
 .history-items-wrapper span.item {
@@ -193,7 +204,7 @@ a {
         padding-bottom: 6px;
     }
 
-.history-items-wrapper .time, .history-items-wrapper .object {
+/* .history-items-wrapper .time, .history-items-wrapper .object {
     margin-right: 0px;
     transition: all 500ms ease;
 }
@@ -201,7 +212,7 @@ a {
 .history-items-wrapper a.delete-btn .time, .history-items-wrapper a.delete-btn .object {
     margin-right: 85px;
     transition: all 500ms ease;
-}
+} */
 
 .history-items-wrapper a .delete {
     display: flex;
@@ -217,7 +228,7 @@ a {
     top: 0;
 }
 
-.history-items-wrapper a.delete-btn .delete {
+/* .history-items-wrapper a.delete-btn .delete {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -228,7 +239,7 @@ a {
     top: 0;
     padding: 35px 22px;
     transition: right 500ms ease;
-}
+} */
 
 .scrolling-div {
     overflow: auto;
