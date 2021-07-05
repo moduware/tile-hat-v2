@@ -176,6 +176,7 @@
                     }
 
                     $('#historyDiv').html('').append(template);
+                    $('.history').hide();
                 });
 
             function createHistoryItemTemplate(item) {
@@ -305,8 +306,6 @@
 
             function toggleChange(that) {
                 if (that.checked) {
-                    $('.celcius-text').removeClass('active');
-                    $('.fahrenheit-text').addClass('active');
                     temperatureType = 'f';
                     if (currentTab === 'Ambient') {
                         render(ambientConfig, ambientTemperature);
@@ -316,8 +315,6 @@
                         render(foreheadConfig, bodyTempAlgorithm(objectTemperature));
                     }
                 } else {
-                    $('.fahrenheit-text').removeClass('active');
-                    $('.celcius-text').addClass('active');
                     temperatureType = 'c';
                     if (currentTab === 'Ambient') {
                         render(ambientConfig, ambientTemperature);
@@ -333,6 +330,15 @@
             
             $('#toggle-temp').on('change', function() {
                 let that = this;
+
+                if (that.checked) {
+                    $('.celcius-text').removeClass('active');
+                    $('.fahrenheit-text').addClass('active');
+                } else {
+                    $('.fahrenheit-text').removeClass('active');
+                    $('.celcius-text').addClass('active');
+                }
+
                 handleToggleChange(that);
             });
 
@@ -341,6 +347,7 @@
                     if (currentPage === 'history') {
                         $('.history-marker').hide();
                         $('.index-marker').show();
+                        $('.history').show();
                         currentPage = 'index';
                     } else {
                         Moduware.API.Exit();
@@ -510,7 +517,7 @@
                                 currentHumidity = parseFloat(e.Message.variables.humidity);
                                 objectTemperature = parseFloat(e.Message.variables.object_temperature);
 
-                                $('#humidyGauge').attr('stroke-dasharray', `${currentHumidity.toFixed(1)}, 100`);
+                                $('#humidyGauge').attr('stroke-dasharray', `${currentHumidity.toFixed(0)}, 100`);
                                 $('#humidtyText').text(`${currentHumidity.toFixed(1)}%`);
 
                                 if (currentTab === 'Ambient') {
@@ -525,7 +532,7 @@
                 });
 
             function bodyTempAlgorithm(objectTemp) {
-                if (objectTemp > 29 && objectTemp < 45) {
+                if (objectTemp >= 32 && objectTemp <= 42.9) {
                     let bodyTemp =
                         (-0.000125 * Math.pow(objectTemp, 6))
                         + (0.0283429488 * Math.pow(objectTemp, 5))

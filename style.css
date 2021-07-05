@@ -243,7 +243,7 @@ a {
 
 .scrolling-div {
     overflow: auto;
-    height: calc(100vh - 110px);
+    height: calc(100vh - 124px);
     overflow: auto;
     overflow-x: hidden;
     scrollbar-width: thin;
