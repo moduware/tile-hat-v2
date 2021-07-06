@@ -46,7 +46,11 @@ a {
 }
 
 .content {
+    display: flex;
+    flex-direction: column;
     flex-grow: 1;
+    height: 100%;
+    overflow: hidden;
 }
 
 .container {
@@ -242,8 +246,6 @@ a {
 } */
 
 .scrolling-div {
-    overflow: auto;
-    height: calc(100vh - 124px);
     overflow: auto;
     overflow-x: hidden;
     scrollbar-width: thin;
@@ -624,6 +626,13 @@ h6 {
     height: 135px;
     margin: auto;
     position: relative;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+.humidity-chart.load {
+    opacity: 1;
 }
 
     .humidity-chart .circular-chart {

@@ -176,7 +176,6 @@
                     }
 
                     $('#historyDiv').html('').append(template);
-                    $('.history').hide();
                 });
 
             function createHistoryItemTemplate(item) {
@@ -347,7 +346,6 @@
                     if (currentPage === 'history') {
                         $('.history-marker').hide();
                         $('.index-marker').show();
-                        $('.history').show();
                         currentPage = 'index';
                     } else {
                         Moduware.API.Exit();
@@ -517,7 +515,7 @@
                                 currentHumidity = parseFloat(e.Message.variables.humidity);
                                 objectTemperature = parseFloat(e.Message.variables.object_temperature);
 
-                                $('#humidyGauge').attr('stroke-dasharray', `${currentHumidity.toFixed(0)}, 100`);
+                                $('#humidyGauge').attr('stroke-dasharray', `${currentHumidity.toFixed(1)}, 100`);
                                 $('#humidtyText').text(`${currentHumidity.toFixed(1)}%`);
 
                                 if (currentTab === 'Ambient') {
@@ -640,10 +638,22 @@
                 gauge.addClass('load');
                 setTimeout(() => {
                     gauge.find('.current-digit').text(digit).trigger('count');
-                },
-                    1000);
-            },
-                500);
+                }, 1000);
+            }, 500);
+
+            setTimeout(() => {
+                $('#humidityChart').show();
+                $('#humidyGauge').css('animation', 'none');
+                $('#humidyGauge').attr('stroke-dasharray', '0, 100');
+                setTimeout(() => {
+                    $('#humidyGauge').attr('stroke-dasharray', '0, 100');
+                    $('#humidityChart').addClass('load');
+                    setTimeout(() => {
+                        $('#humidyGauge').attr('stroke-dasharray', `${currentHumidity.toFixed(1)}, 100`);
+                        $('#humidyGauge').css('animation', '');
+                    }, 250);
+                }, 1000);
+            }, 1000);
 
             function handleResizeGauge() {
                 const height = $(window).height();
