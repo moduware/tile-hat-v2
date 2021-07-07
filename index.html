@@ -530,7 +530,7 @@
                 });
 
             function bodyTempAlgorithm(objectTemp) {
-                if (objectTemp >= 32 && objectTemp <= 42.9) {
+                if (objectTemp > 29 && objectTemp < 45) {
                     let bodyTemp =
                         (-0.000125 * Math.pow(objectTemp, 6))
                         + (0.0283429488 * Math.pow(objectTemp, 5))
@@ -543,7 +543,10 @@
 
                     if (bodyTemp < 0) {
                         bodyTemp = 0;
+                    } else if (bodyTemp < 32 || bodyTemp > 42.9) {
+                        bodyTemp = 0;
                     }
+
                     return bodyTemp;
                 } else {
                     return 0;
