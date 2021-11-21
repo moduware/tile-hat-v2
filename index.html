@@ -354,15 +354,18 @@
 
             $('#saveBtn').on('click',
                 function () {
-                    const name = prompt(`${language === 'en' ? 'Give it a name' : '给它起个名字'}`, '');
-                    if (name) {
-                        const ls = localStorage.getItem('history');
+                    const ls = localStorage.getItem('history');
 
-                        if (ls) {
-                            historyList = JSON.parse(ls);
-                        } else {
-                            historyList = [];
-                        }
+                    if (ls) {
+                        historyList = JSON.parse(ls);
+                    } else {
+                        historyList = [];
+                    }
+
+                    let defaultName = `Temp ${historyList.length + 1}`
+
+                    const name = prompt(`${language === 'en' ? 'Give it a name' : '给它起个名字'}`, defaultName);
+                    if (name) {
 
                         let t = 0;
 
@@ -412,7 +415,7 @@
                         return e.id === id;
                     });
 
-                    if (index !== -1) {
+                    if (index !== -1) {v 
                         historyList.splice(index, 1);
                     }
 
