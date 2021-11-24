@@ -20,7 +20,7 @@
                     <img src="icons/back.svg" />
                 </a>
             </div>
-            <h4 class="title"><span class="translate" data-translate="title">Temperature</span></h4>
+            <h4 class="title"><span class="translate trn" data-translate="title">Temperature</span></h4>
             <div class="history">
                 <a href="javascript:;" id="historyLink">
                     <img src="icons/history.svg" />
@@ -57,7 +57,7 @@
                     <path id="humidyGauge" class="circle" stroke-dasharray="0, 100" d="M18 2.0845
                 a 15.9155 15.9155 0 0 1 0 31.831
                 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                    <text x="18" y="15" class="text translate" data-translate="humidity">
+                    <text x="18" y="15" class="text translate trn" data-translate="humidity">
                         Humidity
                     </text>
                     <text id="humidtyText" x="18" y="23" class="percentage">
@@ -77,7 +77,7 @@
                 </p>
             </div>
             <div>
-                <a class="save-btn translate" data-translate="save" href="javascript:;" id="saveBtn">Save</a>
+                <a class="save-btn translate trn" data-translate="save" href="javascript:;" id="saveBtn">Save</a>
             </div>
 
         </div>
@@ -86,7 +86,7 @@
             <a class="search-icon" href="javascript:;">
                 <img src="icons/search.svg">
             </a>
-            <input class="form-control translate" data-translate="search" type="text" placeholder="Search"
+            <input class="form-control translate trn" data-translate="search" type="text" placeholder="Search"
                 id="searchHistoryTxt" />
             <!--<a class="mic-icon" href="javascript:;">
             <img src="icons/microphone.svg">
@@ -117,6 +117,8 @@
     <script src="jquery.min.js"></script>
     <script src="moment.min.js"></script>
     <script src="rainbowvis.js"></script>
+    <script src="jquery.translate.js"></script>
+    <script src="lang.js"></script>
 
     <script type="text/javascript">
 
@@ -130,6 +132,12 @@
             var historyList = [];
             var language = 'en';
             var colour = new Rainbow();
+            var translator = $('body').translate({lang: language, t: lang});
+
+            // setTimeout(() => {
+            //     alert('ready')
+            //     translator.lang("zh");
+            // }, 5000);
 
             var ambientConfig = {
                 points: 100,
@@ -180,16 +188,16 @@
 
             function createHistoryItemTemplate(item) {
 
-                let itemTab = item.tab;
-                if (language === 'zh') {
-                    if (itemTab === 'Ambient') {
-                        itemTab = '周围';
-                    } else if (itemTab === 'Object') {
-                        itemTab = '目的';
-                    } else {
-                        itemTab = '前额';
-                    }
-                }
+                let itemTab = get(item.tab, language);
+                // if (language === 'zh') {
+                //     if (itemTab === 'Ambient') {
+                //         itemTab = '周围';
+                //     } else if (itemTab === 'Object') {
+                //         itemTab = '目的';
+                //     } else {
+                //         itemTab = '前额';
+                //     }
+                // }
 
                 return `<a href="javascript:;">
                                 <span class="item">
@@ -456,40 +464,42 @@
 
                     //moment.locale(language);
 
-                    $('.translate').each(function (index, element) {
-                        switch ($(element).data('translate')) {
-                            case 'title':
-                                if (language === 'en') {
-                                    $(element).text('Temperature');
-                                } else {
-                                    $(element).text('温度');
-                                }
-                                break;
+                    translator.lang(language);
 
-                            case 'humidity':
-                                if (language === 'en') {
-                                    $(element).text('Humidity');
-                                } else {
-                                    $(element).text('湿度');
-                                }
-                                break;
-                            case 'save':
-                                if (language === 'en') {
-                                    $(element).text('Save');
-                                } else {
-                                    $(element).text('保存');
-                                }
-                                break;
+                    // $('.translate').each(function (index, element) {
+                    //     switch ($(element).data('translate')) {
+                    //         case 'title':
+                    //             if (language === 'en') {
+                    //                 $(element).text('Temperature');
+                    //             } else {
+                    //                 $(element).text('温度');
+                    //             }
+                    //             break;
 
-                            case 'search':
-                                if (language === 'en') {
-                                    $(element).attr('placeholder', 'Search');
-                                } else {
-                                    $(element).attr('placeholder', '搜索');
-                                }
-                                break;
-                        }
-                    });
+                    //         case 'humidity':
+                    //             if (language === 'en') {
+                    //                 $(element).text('Humidity');
+                    //             } else {
+                    //                 $(element).text('湿度');
+                    //             }
+                    //             break;
+                    //         case 'save':
+                    //             if (language === 'en') {
+                    //                 $(element).text('Save');
+                    //             } else {
+                    //                 $(element).text('保存');
+                    //             }
+                    //             break;
+
+                    //         case 'search':
+                    //             if (language === 'en') {
+                    //                 $(element).attr('placeholder', 'Search');
+                    //             } else {
+                    //                 $(element).attr('placeholder', '搜索');
+                    //             }
+                    //             break;
+                    //     }
+                    // });
 
                     Moduware.v1.Module.ExecuteCommand(Moduware.Arguments[0], 'StartSensor', []);
 
@@ -563,16 +573,16 @@
                 const realPeaks = config.peaks.map(peak => Math.floor(peak * (1 / step)));
                 const hueStep = 230 / config.points; // (100)
 
-                let currentTabTranslated = currentTab;
-                if (language === 'zh') {
-                    if (currentTab === 'Ambient') {
-                        currentTabTranslated = '周围';
-                    } else if (currentTab === 'Object') {
-                        currentTabTranslated = '目的';
-                    } else {
-                        currentTabTranslated = '前额';
-                    }
-                }
+                let currentTabTranslated = get(currentTab, language);
+                // if (language === 'zh') {
+                //     if (currentTab === 'Ambient') {
+                //         currentTabTranslated = '周围';
+                //     } else if (currentTab === 'Object') {
+                //         currentTabTranslated = '目的';
+                //     } else {
+                //         currentTabTranslated = '前额';
+                //     }
+                // }
 
                 if (temperatureType === 'f') {
                     temperature = celsius2Farenheit(temperature);
@@ -582,11 +592,11 @@
 
                 if (currentTab === 'Forehead' && ((temperature === 0 && temperatureType === 'c') || (temperature === 32 && temperatureType === 'f'))) {
                     gaugeDigits.html('')
-                        .prepend(`<div class="title">${currentTabTranslated}<br>${language === 'en' ? 'temperature' : '温度'}</div>`)
+                        .prepend(`<div class="title">${currentTabTranslated}<br>${get('temperature', language)}</div>`)
                         .prepend(`<span class="digit current-digit count">__</span>`);
                 } else {
                     gaugeDigits.html('')
-                        .prepend(`<div class="title">${currentTabTranslated}<br>${language === 'en' ? 'temperature' : '温度'}</div>`)
+                        .prepend(`<div class="title">${currentTabTranslated}<br>${get('temperature', language)}</div>`)
                         .prepend(`<span class="digit current-digit count">${temperature.toFixed(1)}</span>`);
                 }
 
