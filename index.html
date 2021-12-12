@@ -522,11 +522,17 @@
 
                     Moduware.v1.Module.addEventListener('MessageReceived',
                         function (e) {
-                            if (e.ModuleUuid === Moduware.Arguments.uuid && e.Message.dataSource === 'SensorValue') {
+                         // if (e.ModuleUuid === Moduware.Arguments.uuid && e.Message.dataSource === 'SensorValue') {
+                            if (e.ModuleUuid === Moduware.Arguments.uuid && e.Message.dataSource === 'RefreshData') {
 
-                                ambientTemperature = parseFloat(e.Message.variables.ambient_temperature);
-                                currentHumidity = parseFloat(e.Message.variables.humidity);
-                                objectTemperature = parseFloat(e.Message.variables.object_temperature);
+
+                                // ambientTemperature = parseFloat(e.Message.variables.ambient_temperature);
+                                // currentHumidity = parseFloat(e.Message.variables.humidity);
+                                // objectTemperature = parseFloat(e.Message.variables.object_temperature);
+
+                                ambientTemperature = parseFloat(e.Message.variables.Sensor2AmbientTemperature);
+                                currentHumidity = parseFloat(e.Message.variables.Sensor2Humidity);
+                                objectTemperature = parseFloat(e.Message.variables.Sensor1ObjectTemperature);
 
                                 $('#humidyGauge').attr('stroke-dasharray', `${currentHumidity.toFixed(1)}, 100`);
                                 $('#humidtyText').text(`${currentHumidity.toFixed(1)}%`);
