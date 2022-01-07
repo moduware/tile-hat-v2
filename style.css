@@ -693,3 +693,103 @@ h6 {
 	z-index: -1;
 	padding-top: 45px;
 }
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+    padding: 24px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: 0.3s ease;
+
+}
+
+.modal-content {
+    width: 268px;
+    padding: 20px 16px 0 16px;
+    background-color: #F9F9FB;
+    border-radius: 14px;
+    text-align: center;
+    transition: 0.4s ease;
+    transform: scale(0.8);
+}
+
+.modal-content.active {
+    transform: scale(1);
+}
+
+.modal-content h1 {
+    font-family: "SF Pro Text", "Roboto", sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 17px;
+    line-height: 22px;
+    letter-spacing: -0.408px;
+    margin-bottom: 2px;
+}
+
+.modal-content p {
+    font-family: "SF Pro Text", "Roboto", sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 13px;
+    line-height: 16px;
+    text-align: center;
+    letter-spacing: -0.078px;
+    margin-bottom: 20px;
+}
+
+.modal-content input {
+    width: 100%;
+    background: #FFFFFF;
+    border-radius: 6px;
+    border: 1px solid #D3D4D6;
+    padding: 13px 0px 13px 20px;
+    outline: 0;
+    font-family: "Roboto", sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 17px;
+    line-height: 24px;
+    letter-spacing: -0.408px;
+    color: #112331;
+    margin-bottom: 24px;
+}
+
+.modal-content input::placeholder {
+    color: #D3D4D6;
+}
+
+.modal-content .button-container {
+    display: flex;
+    margin: 0 -16px;
+}
+
+.modal-content .button-container .button {
+    width: 100%;
+    background-color: transparent;
+    outline: 0;
+    border: 0;
+    padding: 11px 0;
+    border-top: 1px solid #D3D4D6;
+
+    font-family: "SF Pro Text", "Roboto", sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 17px;
+    line-height: 22px;
+    text-align: center;
+    letter-spacing: -0.408px;
+    color: #A42F3A;
+}
+
+.modal-content .button-container .button:nth-child(2) {
+    border-left: 1px solid #D3D4D6;
+    font-weight: 600;
+}

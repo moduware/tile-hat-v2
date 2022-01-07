@@ -31,6 +31,22 @@ const lang = {
     en: "temperature",
     zh: "温"
   },
+  "Give it a name!": {
+    en: "Give it a name!",
+    zh: "给它起个名字"
+  },
+  "Name your measurement so you can find it in history": {
+    en: "Name your measurement so you can find it in history",
+    zh: "..."
+  },
+  "New name": {
+    en: "New name",
+    zh: "..."
+  },
+  "Cancel": {
+    en: "Cancel",
+    zh: "..."
+  }
 };
 
 function get(word, language) {

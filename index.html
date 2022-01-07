@@ -97,6 +97,18 @@
 
         </div>
 
+        <div class="modal-overlay" id="modal-overlay">
+            <div class="modal-content" id="modal-content">
+                <h1 class="trn">Give it a name!</h1>
+                <p class="trn">Name your measurement so you can find it in history</p>
+                <input type="text" class="trn" placeholder="New name" id="input-value" />
+                <div class="button-container">
+                    <button type="button" class="button trn" id="cancel-modal">Cancel</button>
+                    <button type="button" class="button trn" id="save-modal">Save</button>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <footer class="app-footer index-marker">
@@ -360,48 +372,73 @@
                     }
                 });
 
-            $('#saveBtn').on('click',
-                function () {
-                    const ls = localStorage.getItem('history');
+            function openModal() {
+                const modal = document.getElementById('modal-overlay');
+                const content = document.getElementById('modal-content');
+                const input = document.getElementById('input-value');
 
-                    if (ls) {
-                        historyList = JSON.parse(ls);
-                    } else {
-                        historyList = [];
-                    }
+                const ls = localStorage.getItem('history');
+                
+                if (ls) {
+                    historyList = JSON.parse(ls);
+                } else {
+                    historyList = [];
+                }
 
-                    let defaultName = `Temp ${historyList.length + 1}`
+                let defaultName = `Temp ${historyList.length + 1}`;
+                input.value = defaultName;
 
-                    const name = prompt(`${language === 'en' ? 'Give it a name' : '给它起个名字'}`, defaultName);
-                    if (name) {
+                modal.style.display = 'flex';
+                setTimeout(() => modal.style.opacity = 1, 0);
+                setTimeout(() => content.classList.add('active'), 0);
+            }
 
-                        let t = 0;
+            function closeModal() {
+                const modal = document.getElementById('modal-overlay');
+                const content = document.getElementById('modal-content');
+                const input = document.getElementById('input-value');
 
-                        if (language === 'en') {
-                            moment.locale('en');
-                        } else {
-                            moment.locale('zh-cn')
-                        }
-                        if (currentTab === 'Ambient') {
-                            t = ambientTemperature.toFixed(1);
-                        } else if (currentTab === 'Object') {
-                            t = objectTemperature.toFixed(1)
-                        } else {
-                            t = bodyTempAlgorithm(objectTemperature).toFixed(1);
-                        }
-                        historyList.push({
-                            name: name,
-                            id: new Date().getTime().toString(),
-                            date: `${moment().calendar()}`,
-                            tab: currentTab,
-                            tempType: temperatureType,
-                            humidity: currentHumidity.toFixed(1),
-                            temp: temperatureType === 'c' ? t : celsius2Farenheit(t)
-                        });
+                content.classList.remove('active');
+                setTimeout(() => modal.style.opacity = 0, 0);
+                setTimeout(() => modal.style.display = 'none', 300);
+                setTimeout(() => input.value = '', 300);
+            }
 
-                        localStorage.setItem('history', JSON.stringify(historyList));
-                    }
+            function saveHistory() {
+                const input = document.getElementById('input-value');
+                let t = 0;
+
+                if (language === 'en') {
+                    moment.locale('en');
+                } else {
+                    moment.locale('zh-cn')
+                }
+
+                if (currentTab === 'Ambient') {
+                    t = ambientTemperature.toFixed(1);
+                } else if (currentTab === 'Object') {
+                    t = objectTemperature.toFixed(1)
+                } else {
+                    t = bodyTempAlgorithm(objectTemperature).toFixed(1);
+                }
+
+                historyList.push({
+                    name: input.value,
+                    id: new Date().getTime().toString(),
+                    date: `${moment().calendar()}`,
+                    tab: currentTab,
+                    tempType: temperatureType,
+                    humidity: currentHumidity.toFixed(1),
+                    temp: temperatureType === 'c' ? t : celsius2Farenheit(t)
                 });
+                
+                localStorage.setItem('history', JSON.stringify(historyList));
+                closeModal();
+            }
+
+            $('#saveBtn').on('click', openModal);
+            $('#cancel-modal').on('click', closeModal);
+            $('#save-modal').on('click', saveHistory);
 
             $(document).on('click',
                 '#historyDiv a',
