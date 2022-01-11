@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <div class="content">
+    <div class="content" id="mainContent">
 
         <!-- <span></span> -->
         <header class="app-header">
@@ -82,21 +82,6 @@
 
         </div>
 
-        <div class="search-wapper history-marker">
-            <a class="search-icon" href="javascript:;">
-                <img src="icons/search.svg">
-            </a>
-            <input class="form-control translate trn" data-translate="search" type="text" placeholder="Search"
-                id="searchHistoryTxt" />
-            <!--<a class="mic-icon" href="javascript:;">
-            <img src="icons/microphone.svg">
-        </a>-->
-        </div>
-
-        <div class="history-items-wrapper scrolling-div history-marker" id="historyDiv">
-
-        </div>
-
         <div class="modal-overlay" id="modal-overlay">
             <div class="modal-content" id="modal-content">
                 <h1 class="trn">Give it a name!</h1>
@@ -124,6 +109,27 @@
             </a>
         </div>
     </footer>
+
+    <div class="history-overlay" id="historyOverlay"></div>
+
+    <div class="history-modal" id="historyModal">
+        <div class="history-header">
+            <button type="button" id="closeHistory">
+                <img src="icons/back.svg" />
+            </button>
+            <p>History</p>
+        </div>
+        <div class="search-wapper history-marker">
+            <a class="search-icon" href="javascript:;">
+                <img src="icons/search.svg">
+            </a>
+            <input class="form-control translate trn" data-translate="search" type="text" placeholder="Search"
+                id="searchHistoryTxt" />
+        </div>
+        <div class="history-items-wrapper scrolling-div history-marker" id="historyDiv">
+
+        </div>
+    </div>
 
 
     <script src="jquery.min.js"></script>
@@ -173,30 +179,81 @@
             $('#objectIllustration').hide();
             $('#foreheadIllustration').hide();
             $('#foreheadWarning').hide();
-            $('.history-marker').hide();
+            // $('.history-marker').hide();
             $('.index-marker').show();
             $('#humidityChart').show();
 
             render(ambientConfig, ambientTemperature);
 
-            $('#historyLink').on('click',
-                function () {
-                    currentPage = 'history';
-                    $('.history-marker').show();
-                    $('.index-marker').hide();
-                    const ls = localStorage.getItem('history');
-                    if (ls) {
-                        historyList = JSON.parse(ls);
-                    } else {
-                        historyList = [];
-                    }
-                    let template = '';
-                    for (let i = 0; i < historyList.length; i++) {
-                        template += createHistoryItemTemplate(historyList[i]);
-                    }
+            // $('#historyLink').on('click',
+            //     function () {
+            //         currentPage = 'history';
+            //         $('.history-marker').show();
+            //         $('.index-marker').hide();
+            //         const ls = localStorage.getItem('history');
+            //         if (ls) {
+            //             historyList = JSON.parse(ls);
+            //         } else {
+            //             historyList = [];
+            //         }
+            //         let template = '';
+            //         for (let i = 0; i < historyList.length; i++) {
+            //             template += createHistoryItemTemplate(historyList[i]);
+            //         }
 
-                    $('#historyDiv').html('').append(template);
-                });
+            //         $('#historyDiv').html('').append(template);
+            //     });
+
+            function generateHistory() {
+                const ls = localStorage.getItem('history');
+                if (ls) {
+                    historyList = JSON.parse(ls);
+                } else {
+                    historyList = [];
+                }
+                let template = '';
+                for (let i = 0; i < historyList.length; i++) {
+                    template += createHistoryItemTemplate(historyList[i]);
+                }
+                $('#historyDiv').html('').append(template);
+            }
+
+            function openHistory() {
+                generateHistory();
+                currentPage = 'history';
+
+                const overlay = document.getElementById('historyOverlay');
+                const modal = document.getElementById('historyModal');
+                const mainContent = document.getElementById('mainContent');
+                
+                overlay.style.display = 'block';
+                modal.style.display = 'block';
+                setTimeout(() => {
+                    overlay.classList.add('active');
+                    modal.classList.add('active');
+                    mainContent.classList.add('hidden');
+                }, 0);
+            };
+
+            function closeHistory() {
+                currentPage = 'index';
+
+                const overlay = document.getElementById('historyOverlay');
+                const modal = document.getElementById('historyModal');
+                const mainContent = document.getElementById('mainContent');
+
+                overlay.classList.remove('active');
+                modal.classList.remove('active');
+                mainContent.classList.remove('hidden');
+
+                setTimeout(() => {
+                    overlay.style.display = 'none';
+                    modal.style.display = 'none';
+                }, 550);
+            }
+
+            $('#historyLink').on('click', openHistory);
+            $('#closeHistory').on('click', closeHistory);
 
             function createHistoryItemTemplate(item) {
 
@@ -460,7 +517,7 @@
                         return e.id === id;
                     });
 
-                    if (index !== -1) {v 
+                    if (index !== -1) {
                         historyList.splice(index, 1);
                     }
 
