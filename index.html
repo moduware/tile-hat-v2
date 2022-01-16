@@ -227,7 +227,7 @@
                 const mainContent = document.getElementById('mainContent');
                 
                 overlay.style.display = 'block';
-                modal.style.display = 'block';
+                modal.style.display = 'flex';
                 setTimeout(() => {
                     overlay.classList.add('active');
                     modal.classList.add('active');
@@ -268,7 +268,7 @@
                 //     }
                 // }
 
-                return `<a href="javascript:;">
+                return `<a href="javascript:;" class="btn-${item.id}">
                                 <span class="item">
                                     <span>${item.name}</span>
                                     <span class="time">${item.date}</span>
@@ -497,51 +497,53 @@
             $('#cancel-modal').on('click', closeModal);
             $('#save-modal').on('click', saveHistory);
 
-            $(document).on('click',
-                '#historyDiv a',
-                function (e) {
-                    e.preventDefault();
-                    if ($(this).hasClass('delete-btn')) {
-                        $(this).removeClass('delete-btn');
-                    } else {
-                        $(this).addClass('delete-btn');
-                    }
+            $(document).on('click', '#historyDiv a', function (e) {
+                e.preventDefault();
+                if ($(this).hasClass('delete-btn')) {
+                    $(this).removeClass('delete-btn');
+                } else {
+                    $(this).addClass('delete-btn');
+                }
+            });
+
+            function deleteHistory(id) {
+                const index = historyList.findIndex(function (e) {
+                    return e.id === id;
                 });
 
-            $(document).on('click',
-                '.delete',
-                function () {
-                    const id = $(this).data('id').toString();
+                if (index !== -1) {
+                    historyList.splice(index, 1);
+                }
 
-                    const index = historyList.findIndex(function (e) {
-                        return e.id === id;
-                    });
+                localStorage.setItem('history', JSON.stringify(historyList));
 
-                    if (index !== -1) {
-                        historyList.splice(index, 1);
+                if ($('#searchHistoryTxt').val()) {
+
+                    const tempHistoryList = historyList.filter(x => x.name.toLowerCase().includes($('#searchHistoryTxt').val().toLowerCase()));
+                    let template = '';
+
+                    for (let i = 0; i < tempHistoryList.length; i++) {
+                        template += createHistoryItemTemplate(tempHistoryList[i]);
                     }
 
-                    localStorage.setItem('history', JSON.stringify(historyList));
-
-                    if ($('#searchHistoryTxt').val()) {
-
-                        const tempHistoryList = historyList.filter(x => x.name.toLowerCase().includes($('#searchHistoryTxt').val().toLowerCase()));
-                        let template = '';
-
-                        for (let i = 0; i < tempHistoryList.length; i++) {
-                            template += createHistoryItemTemplate(tempHistoryList[i]);
-                        }
-
-                        $('#historyDiv').html('').append(template);
-                    } else {
-                        let template = '';
-                        for (let i = 0; i < historyList.length; i++) {
-                            template += createHistoryItemTemplate(historyList[i]);
-                        }
-
-                        $('#historyDiv').html('').append(template);
+                    $('#historyDiv').html('').append(template);
+                } else {
+                    let template = '';
+                    for (let i = 0; i < historyList.length; i++) {
+                        template += createHistoryItemTemplate(historyList[i]);
                     }
-                });
+
+                    $('#historyDiv').html('').append(template);
+                }
+            }
+
+            $(document).on('click', '.delete', function(e) {
+                e.stopPropagation();
+                const id = $(this).data('id').toString();
+                $(`.btn-${id}`).addClass('animate-hide-1');
+                setTimeout(() => $(`.btn-${id}`).addClass('animate-hide-2'), 400);
+                setTimeout(() => deleteHistory(id), 750);
+            });
 
             function celsius2Farenheit(value) {
                 return value * 1.8 + 32;

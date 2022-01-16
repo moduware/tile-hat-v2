@@ -1,12 +1,12 @@
 {
-	"id": "nexpaq.tile.hat",
+	"id": "moduware.tile.hat-v2",
 	"name": "Temperature and Humidity",
 	"description": "Moduware T&H tile module interface",
 	"version": "3.0.0",
 	"changes": "Complete rewrite",
 	"minumumAppVersion": "1.1.8",
 	"modules": [
-		"nexpaq.module.hat"
+		"moduware.module.hat-v2"
 	],
 	"title": "Temperature",
 	"color": "#FFB930",

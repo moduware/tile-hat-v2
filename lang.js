@@ -37,15 +37,15 @@ const lang = {
   },
   "Name your measurement so you can find it in history": {
     en: "Name your measurement so you can find it in history",
-    zh: "..."
+    zh: "请给此记录命名，方便在历史记录中查找"
   },
   "New name": {
     en: "New name",
-    zh: "..."
+    zh: "新名称"
   },
   "Cancel": {
     en: "Cancel",
-    zh: "..."
+    zh: "取消"
   }
 };
 
