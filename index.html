@@ -29,7 +29,7 @@
         </header>
 
         <div class="wrapper index-marker">
-            
+
             <div class="pull-right new-toggle-container">
                 <label class="switch">
                     <input type="checkbox" id="toggle-temp">
@@ -141,6 +141,7 @@
     <script type="text/javascript">
 
         $(function () {
+            console.log('init')
             var currentPage = 'index';
             var currentTab = 'Ambient';
             var ambientTemperature = 0;
@@ -150,7 +151,7 @@
             var historyList = [];
             var language = 'en';
             var colour = new Rainbow();
-            var translator = $('body').translate({lang: language, t: lang});
+            var translator = $('body').translate({ lang: language, t: lang });
 
             // setTimeout(() => {
             //     alert('ready')
@@ -225,7 +226,7 @@
                 const overlay = document.getElementById('historyOverlay');
                 const modal = document.getElementById('historyModal');
                 const mainContent = document.getElementById('mainContent');
-                
+
                 overlay.style.display = 'block';
                 modal.style.display = 'flex';
                 setTimeout(() => {
@@ -372,7 +373,7 @@
                     }
                 });
 
-            function debounce(func, timeout = 300){
+            function debounce(func, timeout = 300) {
                 let timer;
                 return (...args) => {
                     clearTimeout(timer);
@@ -403,8 +404,8 @@
             }
 
             const handleToggleChange = debounce((that) => toggleChange(that));
-            
-            $('#toggle-temp').on('change', function() {
+
+            $('#toggle-temp').on('change', function () {
                 let that = this;
 
                 if (that.checked) {
@@ -435,7 +436,7 @@
                 const input = document.getElementById('input-value');
 
                 const ls = localStorage.getItem('history');
-                
+
                 if (ls) {
                     historyList = JSON.parse(ls);
                 } else {
@@ -488,7 +489,7 @@
                     humidity: currentHumidity.toFixed(1),
                     temp: temperatureType === 'c' ? t : celsius2Farenheit(t)
                 });
-                
+
                 localStorage.setItem('history', JSON.stringify(historyList));
                 closeModal();
             }
@@ -537,7 +538,7 @@
                 }
             }
 
-            $(document).on('click', '.delete', function(e) {
+            $(document).on('click', '.delete', function (e) {
                 e.stopPropagation();
                 const id = $(this).data('id').toString();
                 $(`.btn-${id}`).addClass('animate-hide-1');
@@ -555,52 +556,15 @@
 
             document.addEventListener('WebViewApiReady',
                 function () {
-
                     language = Moduware.Arguments.language;
 
-                    //moment.locale(language);
-
                     translator.lang(language);
-
-                    // $('.translate').each(function (index, element) {
-                    //     switch ($(element).data('translate')) {
-                    //         case 'title':
-                    //             if (language === 'en') {
-                    //                 $(element).text('Temperature');
-                    //             } else {
-                    //                 $(element).text('温度');
-                    //             }
-                    //             break;
-
-                    //         case 'humidity':
-                    //             if (language === 'en') {
-                    //                 $(element).text('Humidity');
-                    //             } else {
-                    //                 $(element).text('湿度');
-                    //             }
-                    //             break;
-                    //         case 'save':
-                    //             if (language === 'en') {
-                    //                 $(element).text('Save');
-                    //             } else {
-                    //                 $(element).text('保存');
-                    //             }
-                    //             break;
-
-                    //         case 'search':
-                    //             if (language === 'en') {
-                    //                 $(element).attr('placeholder', 'Search');
-                    //             } else {
-                    //                 $(element).attr('placeholder', '搜索');
-                    //             }
-                    //             break;
-                    //     }
-                    // });
 
                     Moduware.v1.Module.ExecuteCommand(Moduware.Arguments[0], 'StartSensor', []);
 
                     Moduware.API.addEventListener('HardwareBackButtonPressed',
                         () => {
+                            console.log('back button')
                             if (currentPage === 'index') {
                                 Moduware.API.Exit();
                             } else {
@@ -618,17 +582,37 @@
 
                     Moduware.v1.Module.addEventListener('MessageReceived',
                         function (e) {
-                         // if (e.ModuleUuid === Moduware.Arguments.uuid && e.Message.dataSource === 'SensorValue') {
-                            if (e.ModuleUuid === Moduware.Arguments.uuid && e.Message.dataSource === 'RefreshData') {
+                            console.log('received message', e);
+                            if (e.ModuleUuid === Moduware.Arguments.uuid && e.Message.dataSource === 'SensorValue') {
+                                ambientTemperature = parseFloat(e.Message.variables.ambient_temperature);
+                                currentHumidity = parseFloat(e.Message.variables.humidity);
+                                objectTemperature = parseFloat(e.Message.variables.object_temperature);
 
+                                $('#humidyGauge').attr('stroke-dasharray', `${currentHumidity.toFixed(1)}, 100`);
+                                $('#humidtyText').text(`${currentHumidity.toFixed(1)}%`);
 
-                                // ambientTemperature = parseFloat(e.Message.variables.ambient_temperature);
-                                // currentHumidity = parseFloat(e.Message.variables.humidity);
-                                // objectTemperature = parseFloat(e.Message.variables.object_temperature);
+                                if (currentTab === 'Ambient') {
+                                    render(ambientConfig, ambientTemperature);
+                                } else if (currentTab === 'Object') {
+                                    render(objectConfig, objectTemperature);
+                                } else if (currentTab === 'Forehead') {
+                                    render(foreheadConfig, bodyTempAlgorithm(objectTemperature));
+                                }
+                            } else if (e.ModuleUuid === Moduware.Arguments.uuid && e.Message.dataSource === 'RefreshData') {
+                                var objectTemperatureStatus = e.Message.variables.Sensor2AmbientTemperature;
+                                var humidityStatus = e.Message.variables.HumidityStatus;
+                                var distanceStatus = e.Message.variables.DistanceStatus;
+                                var sensor1ObjectTemperature = parseFloat(e.Message.variables.Sensor1ObjectTemperature);
+                                var sensor1AmbientTemperature = parseFloat(e.Message.variables.Sensor1AmbientTemperature);
+                                var sensor1BodyTemperature = parseFloat(e.Message.variables.Sensor1BodyTemperature);
+                                var sensor2AmbientTemperature = parseFloat(e.Message.variables.Sensor2AmbientTemperature);
+                                var sensor2Humidity = parseFloat(e.Message.variables.Sensor2Humidity);
+                                var sensor3DistanceStatus = e.Message.variables.Sensor3DistanceStatus;
+                                var sensor3DistanceValue = parseFloat(e.Message.variables.Sensor3DistanceValue);
 
-                                ambientTemperature = parseFloat(e.Message.variables.Sensor2AmbientTemperature);
-                                currentHumidity = parseFloat(e.Message.variables.Sensor2Humidity);
-                                objectTemperature = parseFloat(e.Message.variables.Sensor1ObjectTemperature);
+                                ambientTemperature = sensor2AmbientTemperature; // parseFloat(e.Message.variables.Sensor2AmbientTemperature);
+                                currentHumidity = sensor2Humidity; //parseFloat(e.Message.variables.Sensor2Humidity); // 
+                                objectTemperature = sensor1ObjectTemperature; //parseFloat(e.Message.variables.Sensor1ObjectTemperature); 
 
                                 $('#humidyGauge').attr('stroke-dasharray', `${currentHumidity.toFixed(1)}, 100`);
                                 $('#humidtyText').text(`${currentHumidity.toFixed(1)}%`);
@@ -645,28 +629,43 @@
                 });
 
             function bodyTempAlgorithm(objectTemp) {
-                if (objectTemp > 29 && objectTemp < 45) {
-                    let bodyTemp =
-                        (-0.000125 * Math.pow(objectTemp, 6))
-                        + (0.0283429488 * Math.pow(objectTemp, 5))
-                        + (-2.67004808 * Math.pow(objectTemp, 4))
-                        + (133.762569 * Math.pow(objectTemp, 3))
-                        + (-3758.41829 * Math.pow(objectTemp, 2))
-                        + (56155.4892 * objectTemp)
-                        - 348548.755
-                        + objectTemp;
+                // if (objectTemp > 29 && objectTemp < 45) {
+                //     let bodyTemp =
+                //         (-0.000125 * Math.pow(objectTemp, 6))
+                //         + (0.0283429488 * Math.pow(objectTemp, 5))
+                //         + (-2.67004808 * Math.pow(objectTemp, 4))
+                //         + (133.762569 * Math.pow(objectTemp, 3))
+                //         + (-3758.41829 * Math.pow(objectTemp, 2))
+                //         + (56155.4892 * objectTemp)
+                //         - 348548.755
+                //         + objectTemp;
 
-                    if (bodyTemp < 0) {
-                        bodyTemp = 0;
-                    } else if (bodyTemp < 32 || bodyTemp > 42.9) {
-                        bodyTemp = 0;
-                    }
+                //     if (bodyTemp < 0) {
+                //         bodyTemp = 0;
+                //     } else if (bodyTemp < 32 || bodyTemp > 42.9) {
+                //         bodyTemp = 0;
+                //     }
 
-                    return bodyTemp;
-                } else {
+                //     return bodyTemp;
+                // } else {
+                //     return 0;
+                // }
+
+                const bodyTemp =
+                    (-0.000125 * Math.pow(objectTemp, 6))
+                    + (0.0283429488 * Math.pow(objectTemp, 5))
+                    + (-2.67004808 * Math.pow(objectTemp, 4))
+                    + (133.762569 * Math.pow(objectTemp, 3))
+                    + (-3758.41829 * Math.pow(objectTemp, 2))
+                    + (56155.4892 * objectTemp)
+                    - 348548.755
+                    + objectTemp;
+
+                if (bodyTemp < 0) {
                     return 0;
+                } else {
+                    return bodyTemp;
                 }
-
             }
 
             function render(config, temperature) {
@@ -676,15 +675,6 @@
                 const hueStep = 230 / config.points; // (100)
 
                 let currentTabTranslated = get(currentTab, language);
-                // if (language === 'zh') {
-                //     if (currentTab === 'Ambient') {
-                //         currentTabTranslated = '周围';
-                //     } else if (currentTab === 'Object') {
-                //         currentTabTranslated = '目的';
-                //     } else {
-                //         currentTabTranslated = '前额';
-                //     }
-                // }
 
                 if (temperatureType === 'f') {
                     temperature = celsius2Farenheit(temperature);
@@ -776,7 +766,7 @@
             function handleResizeGauge() {
                 const height = $(window).height();
                 if (height < 600) {
-                    $('.gauge').css("transform", `scale(${height/600})`);
+                    $('.gauge').css("transform", `scale(${height / 600})`);
                     if (currentTab === 'Ambient') {
                         $('.humidity-chart').css("margin-top", `-${600 - height}px`)
                     } else {
