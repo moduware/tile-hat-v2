@@ -286,8 +286,23 @@
                 function () {
 
                     if ($(this).val()) {
+                        // const tempHistoryList = historyList.filter(x => x.name.toLowerCase().includes($(this).val().toLowerCase()));
+                        const currentValue = $(this).val().toLowerCase();
+                        const tempHistoryList = historyList.filter(history => {
+                            if (history.name.toLowerCase().includes(currentValue)) {
+                                return true;
+                            }
 
-                        const tempHistoryList = historyList.filter(x => x.name.toLowerCase().includes($(this).val().toLowerCase()));
+                            if (`${history.temp}`.includes(currentValue)) {
+                                return true;
+                            }
+
+                            if (`${history.humidity}`.includes(currentValue)) {
+                                return true;
+                            }
+
+                            return false;
+                        });
                         let template = '';
 
                         for (let i = 0; i < tempHistoryList.length; i++) {
